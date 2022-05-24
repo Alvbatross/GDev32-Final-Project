@@ -3,8 +3,10 @@
 // Vertex attributes as inputs
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec3 vertexColor;
-layout(location = 2) in vec3 vertexNormal;
+layout(location = 2) in vec2 vertexUV;
+layout(location = 3) in vec3 vertexNormal;
 
+out vec2 outUV;
 out vec3 outColor;
 out vec3 fragPosition;
 out vec3 fragNormal;
@@ -28,5 +30,6 @@ void main()
 	lightFragPosition = lightProjection * lightView * finalPosition;
 
 	// We pass the color of the current vertex to our output variable
+	outUV = vertexUV;
 	outColor = vertexColor;
 }

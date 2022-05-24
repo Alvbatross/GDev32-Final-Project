@@ -230,13 +230,13 @@ int main()
 
 	Vertex plane[6];
 	//Plane face
-	plane[0] = { -0.5f, 0.f, 0.5f,		160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Lower-left
-	plane[1] = { 0.5f, 0.f, 0.5f,		160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Lower-right
-	plane[2] = { 0.5f, 0.f, -0.5f,		160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Upper-right
+	plane[0] = { -0.5f, 0.f, 0.5f,		255,  255,  255,    0.0f, 1.0f,    0.0f, 1.0f, 0.0f };	// Lower-left
+	plane[1] = { 0.5f, 0.f, 0.5f,		255,  255,  255,    0.0f, 0.0f,    0.0f, 1.0f, 0.0f };	// Lower-right
+	plane[2] = { 0.5f, 0.f, -0.5f,		255,  255,  255,    1.0f, 0.0f,    0.0f, 1.0f, 0.0f };	// Upper-right
 
-	plane[3] = { 0.5f, 0.f, -0.5f,		160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Upper-right
-	plane[4] = { -0.5f, 0.f, -0.5f,	    160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Upper-left
-	plane[5] = { -0.5f, 0.f, 0.5f,		160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Lower-left
+	plane[3] = { 0.5f, 0.f, -0.5f,		255,  255,  255,    1.0f, 0.0f,    0.0f, 1.0f, 0.0f };	// Upper-right
+	plane[4] = { -0.5f, 0.f, -0.5f,	    255,  255,  255,    1.0f, 1.0f,    0.0f, 1.0f, 0.0f };	// Upper-left
+	plane[5] = { -0.5f, 0.f, 0.5f,		255,  255,  255,    0.0f, 1.0f,    0.0f, 1.0f, 0.0f };	// Lower-left
 
 	
 	// Create a vertex buffer object (VBO), and upload our vertices data to the VBO
@@ -275,7 +275,7 @@ int main()
 
 	// Vertex attribute 3 - Normal coordinates
 	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, nx)));
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, nx)));
 	glBindVertexArray(0);
 
 
@@ -300,7 +300,7 @@ int main()
 
 	// Vertex attribute 3 - Normal coordinates
 	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, nx)));
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, nx)));
 	
 	glBindVertexArray(0);
 
@@ -340,63 +340,59 @@ int main()
 	glViewport(0, 0, windowWidth, windowHeight);
 
 
-	//// Create a variable that will contain the ID for our texture,
-	//// and use glGenTextures() to generate the texture itself
-	//GLuint cubeTex;
-	//glGenTextures(1, &cubeTex);
+	// Create a variable that will contain the ID for our texture,
+	// and use glGenTextures() to generate the texture itself
+	GLuint wallTex;
+	glGenTextures(1, &wallTex);
 
-	//// --- Load our image using stb_image ---
+	// --- Load our image using stb_image ---
 
-	//// Im image-space (pixels), (0, 0) is the upper-left corner of the image
-	//// However, in u-v coordinates, (0, 0) is the lower-left corner of the image
-	//// This means that the image will appear upside-down when we use the image data as is
-	//// This function tells stbi to flip the image vertically so that it is not upside-down when we use it
-	//stbi_set_flip_vertically_on_load(true);
+	// Im image-space (pixels), (0, 0) is the upper-left corner of the image
+	// However, in u-v coordinates, (0, 0) is the lower-left corner of the image
+	// This means that the image will appear upside-down when we use the image data as is
+	// This function tells stbi to flip the image vertically so that it is not upside-down when we use it
+	stbi_set_flip_vertically_on_load(true);
 
-	//// 'imageWidth' and imageHeight will contain the width and height of the loaded image respectively
-	//int imageWidth, imageHeight, numChannels;
+	// 'imageWidth' and imageHeight will contain the width and height of the loaded image respectively
+	int imageWidth, imageHeight, numChannels;
 
-	//// Read the image data and store it in an unsigned char array
-	//unsigned char* imageData = stbi_load("", &imageWidth, &imageHeight, &numChannels, 0);
+	// Read the image data and store it in an unsigned char array
+	unsigned char* imageData = stbi_load("BrickWallTex.jpg", &imageWidth, &imageHeight, &numChannels, 0);
 
-	//// Make sure that we actually loaded the image before uploading the data to the GPU
-	//if (imageData != nullptr)
-	//{
-	//	// Our texture is 2D, so we bind our texture to the GL_TEXTURE_2D target
-	//	glBindTexture(GL_TEXTURE_2D, cubeTex);
+	// Make sure that we actually loaded the image before uploading the data to the GPU
+	if (imageData != nullptr)
+	{
+		// Our texture is 2D, so we bind our texture to the GL_TEXTURE_2D target
+		glBindTexture(GL_TEXTURE_2D, wallTex);
 
-	//	// Set the filtering methods for magnification and minification
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		// Set the filtering methods for magnification and minification
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	//	// Set the wrapping method for the s-axis (x-axis) and t-axis (y-axis)
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		// Set the wrapping method for the s-axis (x-axis) and t-axis (y-axis)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	//	// Upload the image data to GPU memory
-	//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+		// Upload the image data to GPU memory
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
 
-	//	// If we set minification to use mipmaps, we can tell OpenGL to generate the mipmaps for us
-	//	//glGenerateMipmap(GL_TEXTURE_2D);
+		// If we set minification to use mipmaps, we can tell OpenGL to generate the mipmaps for us
+		//glGenerateMipmap(GL_TEXTURE_2D);
 
-	//	// Once we have copied the data over to the GPU, we can delete
-	//	// the data on the CPU side, since we won't be using it anymore
-	//	stbi_image_free(imageData);
-	//	imageData = nullptr;
-	//}
-	//else
-	//{
-	//	std::cerr << "Failed to load image" << std::endl;
-	//}
+		// Once we have copied the data over to the GPU, we can delete
+		// the data on the CPU side, since we won't be using it anymore
+		stbi_image_free(imageData);
+		imageData = nullptr;
+	}
+	else
+	{
+		std::cerr << "Failed to load image" << std::endl;
+	}
 
 
 	glEnable(GL_DEPTH_TEST);
 
-	floorTile02 = glm::translate(floorTile02, glm::vec3(0.0f, 0.0f, -1.0f));
-	floorTile02 = glm::scale(floorTile02, glm::vec3(10.0f, 1.0f, 10.0f));
-	floorTile03 = glm::translate(floorTile03, glm::vec3(0.0f, 0.0f, -2.0f));
-	floorTile04 = glm::translate(floorTile04, glm::vec3(0.0f, 0.0f, -3.0f));
-	floorTile05 = glm::translate(floorTile05, glm::vec3(0.0f, 0.0f, -4.0f));
+	floorTile01 = glm::scale(floorTile01, glm::vec3(10.0f, 1.0f, 10.0f));
 
 	wallTileL01 = glm::translate(wallTileL01, glm::vec3(-0.5f, 0.5f, 0.0f));
 	wallTileL01 = glm::rotate(wallTileL01, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -461,22 +457,18 @@ int main()
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
 			cameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
-			std::cout << cameraPosition.z << std::endl;
 		}
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
 			cameraPosition -= camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
-			std::cout << cameraPosition.z << std::endl;
 		}
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
 			cameraPosition -= camSpeed * right * deltaTime;
-			std::cout << cameraPosition.x << std::endl;
 		}
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
 			cameraPosition += camSpeed * right * deltaTime;
-			std::cout << cameraPosition.x << std::endl;
 		}
 		
 		// FIRST PASS
@@ -499,8 +491,6 @@ int main()
 		
 		glUniformMatrix4fv(dirLightProjectionUniformLocation, 1, GL_FALSE, glm::value_ptr(lightProjection));
 		glUniformMatrix4fv(dirLightViewUniformLocation, 1, GL_FALSE, glm::value_ptr(lightView));
-		
-
 
 		// PLANE
 		//
@@ -559,6 +549,7 @@ int main()
 		GLint shadowMapTexUniformLocation = glGetUniformLocation(program, "shadowMap");
 		glUniform1i(shadowMapTexUniformLocation, 0);
 		
+		
 
 		// PLANE 
 		//
@@ -567,14 +558,14 @@ int main()
 		planeUniformLocation = glGetUniformLocation(program, "modelMatrix");
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile01));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile02));
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile03));
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile04));
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile05));
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		// Bind our texture to texture unit 1
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, wallTex);
+
+		// Make our sampler in the fragment shader use texture unit 0
+		GLint texUniformLocation = glGetUniformLocation(program, "tex");
+		glUniform1i(texUniformLocation, 1);
 
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL01));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -597,6 +588,7 @@ int main()
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR05));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
+
 		glBindVertexArray(0);
 
 
@@ -645,6 +637,8 @@ int main()
 		GLint perspectiveUniformLocation = glGetUniformLocation(program, "perspective");
 		glUniformMatrix4fv(camUniformLocation, 1, GL_FALSE, glm::value_ptr(camera));
 		glUniformMatrix4fv(perspectiveUniformLocation, 1, GL_FALSE, glm::value_ptr(perspective));
+
+		glBindVertexArray(0);
 
 		glEnable(GL_DEPTH_TEST);
 

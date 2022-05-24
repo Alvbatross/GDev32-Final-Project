@@ -1,12 +1,15 @@
 #version 330
 
+in vec2 outUV;
+
 in vec3 fragPosition;
 in vec3 outColor;
 in vec3 fragNormal;
 in vec4 lightFragPosition;
 
+vec4 fragColor;
 // Final color of the fragment, which we are required to output
-out vec4 fragColor;
+out vec4 color;
 
 uniform vec3 directionalLightDirection, lightAmbient, lightDiffuse, lightSpecular;
 uniform vec3 spotLightDirection, spotLightPosition, sLightAmbient, sLightDiffuse, sLightSpecular;
@@ -15,11 +18,14 @@ uniform float objectShine;
 uniform vec3 cameraPosition;
 
 uniform sampler2D shadowMap;
+uniform sampler2D tex;
 
 void main()
 {
 	vec3 ambient, diffuse, specular;
 	vec3 finalColor;
+
+	fragColor = texture(tex, outUV);
 
 	vec3 norm = normalize(fragNormal);
 	vec3 viewDir = normalize(cameraPosition - fragPosition);
@@ -35,7 +41,7 @@ void main()
 	
 	vec3 directionalLightDir = normalize(-directionalLightDirection);
 	float directionalLightAmbience = 1.0f;
-	vec3 directionalLightAmbient = directionalLightAmbience * lightAmbient * vec3(outColor);
+	vec3 directionalLightAmbient = directionalLightAmbience * lightAmbient * vec3(fragColor);
 
 
 	float cutOff = 0.91;
@@ -43,16 +49,16 @@ void main()
 	vec3 spotLightDir = normalize(spotLightPosition - fragPosition);
 	float spotAngle = dot(spotLightDir, normalize(-spotLightDirection));
 
-	vec3 spotLightAmbient = sLightAmbient * vec3(outColor) * 1.0f;
+	vec3 spotLightAmbient = sLightAmbient * vec3(fragColor) * 1.0f;
 
 	ambient = spotLightAmbient;
 
-	finalColor = ambient * vec3(outColor);
+	finalColor = ambient * vec3(fragColor);
 
 	//if(depthValue.x >= flNDCz - 0.000005)
 	//{
 		//float directionalLightDiff = max(dot(norm, directionalLightDir), 0.0f);
-		//vec3 directionalLightDiffuse = directionalLightDiff * lightDiffuse * vec3(outColor);
+		//vec3 directionalLightDiffuse = directionalLightDiff * lightDiffuse * vec3(fragColor);
 
 		//vec3 directionalLightReflectDir = reflect(-directionalLightDir, norm);
 
@@ -61,7 +67,7 @@ void main()
 
 
 		float spotLightDiff = max(dot(norm, spotLightDir), 0.0f);
-		vec3 spotLightDiffuse = spotLightDiff * sLightDiffuse * vec3(outColor);
+		vec3 spotLightDiffuse = spotLightDiff * sLightDiffuse * vec3(fragColor);
 
 		vec3 spotLightReflectDir = reflect(-spotLightDir, norm);
 		float spotLightSpec = pow(max(dot(viewDir, spotLightReflectDir), 0.0f), objectShine);
@@ -84,5 +90,5 @@ void main()
 		// Pass the final color to our fragColor output variable
 	//}
 
-	fragColor = vec4(finalColor, 1.0);
+	color = vec4(finalColor, 1.0f);
 }
