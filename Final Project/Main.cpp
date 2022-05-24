@@ -607,6 +607,10 @@ int main()
 		GLint spotLightPositionUniformLocation = glGetUniformLocation(program, "spotLightPosition");
 		GLint spotLightDirectionUniformLocation = glGetUniformLocation(program, "spotLightDirection");
 
+		GLint sLightConstantUniformLocation = glGetUniformLocation(program, "sLightConstant");
+		GLint sLightLinearUniformLocation = glGetUniformLocation(program, "sLightLinear");
+		GLint sLightQuadraticUniformLocation = glGetUniformLocation(program, "sLightQuadratic");
+
 		GLint dirLightProjectionUniformLocation2 = glGetUniformLocation(program, "lightProjection");
 		GLint dirLightViewUniformLocation2 = glGetUniformLocation(program, "lightView");
 		
@@ -622,6 +626,10 @@ int main()
 		glUniform3f(sLightAmbientUniformLocation, 1.0f, 1.0f, 1.0f);
 		glUniform3f(sLightDiffuseUniformLocation, 1.0f, 1.0f, 1.0f);
 		glUniform3f(sLightSpecularUniformLocation, 1.0f, 1.0f, 1.0f);
+
+		glUniform1f(sLightAmbientUniformLocation, 1.0f);
+		glUniform1f(sLightLinearUniformLocation, 0.35f);
+		glUniform1f(sLightQuadraticUniformLocation, 0.44f);
 
 		glUniform3f(spotLightPositionUniformLocation,  cameraPosition.x, cameraPosition.y, cameraPosition.z);
 		glUniform3f(spotLightDirectionUniformLocation, cameraTarget.x, cameraTarget.y, cameraTarget.z);

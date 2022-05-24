@@ -13,6 +13,7 @@ out vec4 color;
 
 uniform vec3 directionalLightDirection, lightAmbient, lightDiffuse, lightSpecular;
 uniform vec3 spotLightDirection, spotLightPosition, sLightAmbient, sLightDiffuse, sLightSpecular;
+uniform float sLightConstant, sLightLinear, sLightQuadratic;
 uniform vec3 objectSpec;
 uniform float objectShine;
 uniform vec3 cameraPosition;
@@ -80,10 +81,12 @@ void main()
 		spotLightSpecular *= spotLightIntensity;
 
 		float spotLightDistance = length(spotLightPosition - fragPosition);
+		float spotLightAttenuation = 1.0 / (sLightConstant + (sLightLinear * spotLightDistance) + (sLightQuadratic * (spotLightDistance * spotLightDistance)));
 		
-		diffuse = vec3(spotLightDiffuse);
-		specular = vec3(spotLightSpecular);
+		diffuse = vec3(spotLightDiffuse) * spotLightAttenuation;
+		specular = vec3(spotLightSpecular) * spotLightAttenuation;
 
+		
 
 		finalColor = (finalColor + diffuse + specular);
 
