@@ -393,6 +393,7 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	floorTile02 = glm::translate(floorTile02, glm::vec3(0.0f, 0.0f, -1.0f));
+	floorTile02 = glm::scale(floorTile02, glm::vec3(10.0f, 1.0f, 10.0f));
 	floorTile03 = glm::translate(floorTile03, glm::vec3(0.0f, 0.0f, -2.0f));
 	floorTile04 = glm::translate(floorTile04, glm::vec3(0.0f, 0.0f, -3.0f));
 	floorTile05 = glm::translate(floorTile05, glm::vec3(0.0f, 0.0f, -4.0f));

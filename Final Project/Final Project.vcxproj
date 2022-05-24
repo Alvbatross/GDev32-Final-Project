@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Source\glad.c" />
+    <ClCompile Include="..\..\..\src\glad.c" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -120,12 +120,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\School Stuff\4th Year\4th Year - 2nd Semester\GDev32\OpenGLStuff\OpenGL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\School Stuff\4th Year\4th Year - 2nd Semester\GDev32\OpenGLStuff\OpenGL\Include;C:\Users\butso\Desktop\School\GDEV32\OpenGL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\School Stuff\4th Year\4th Year - 2nd Semester\GDev32\OpenGLStuff\OpenGL\Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\School Stuff\4th Year\4th Year - 2nd Semester\GDev32\OpenGLStuff\OpenGL\Libraries;C:\Users\butso\Desktop\School\GDEV32\OpenGL\libraries</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -137,14 +137,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\School Stuff\4th Year\4th Year - 2nd Semester\GDev32\OpenGLStuff\OpenGL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\School Stuff\4th Year\4th Year - 2nd Semester\GDev32\OpenGLStuff\OpenGL\Include;C:\Users\butso\Desktop\School\GDEV32\OpenGL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\School Stuff\4th Year\4th Year - 2nd Semester\GDev32\OpenGLStuff\OpenGL\Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\School Stuff\4th Year\4th Year - 2nd Semester\GDev32\OpenGLStuff\OpenGL\Libraries;C:\Users\butso\Desktop\School\GDEV32\OpenGL\libraries</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
