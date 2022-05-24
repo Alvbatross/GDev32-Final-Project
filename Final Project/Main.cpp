@@ -59,15 +59,31 @@ struct Vertex
 {
 	GLfloat x, y, z;	// Position
 	GLubyte r, g, b;	// Color
+	GLfloat u, v;		// UV coordinates
 	GLfloat nx, ny, nz; // Normal Vertices
 };
 
-glm::mat4 cubeMatrix = glm::mat4(1.0f);
-glm::mat4 cubeMatrix2 = glm::mat4(1.0f);
-glm::mat4 cubeMatrix3 = glm::mat4(1.0f);
-glm::mat4 planeMatrix = glm::mat4(1.0f);
+glm::mat4 floorTile01 = glm::mat4(1.0f);
+glm::mat4 floorTile02 = glm::mat4(1.0f);
+glm::mat4 floorTile03 = glm::mat4(1.0f);
+glm::mat4 floorTile04 = glm::mat4(1.0f);
+glm::mat4 floorTile05 = glm::mat4(1.0f);
+
+glm::mat4 wallTileR01 = glm::mat4(1.0f);
+glm::mat4 wallTileR02 = glm::mat4(1.0f);
+glm::mat4 wallTileR03 = glm::mat4(1.0f);
+glm::mat4 wallTileR04 = glm::mat4(1.0f);
+glm::mat4 wallTileR05 = glm::mat4(1.0f);
+
+glm::mat4 wallTileL01 = glm::mat4(1.0f);
+glm::mat4 wallTileL02 = glm::mat4(1.0f);
+glm::mat4 wallTileL03 = glm::mat4(1.0f);
+glm::mat4 wallTileL04 = glm::mat4(1.0f);
+glm::mat4 wallTileL05 = glm::mat4(1.0f);
+
 glm::mat4 camera;
 glm::mat4 perspective;
+
 /**
  * @brief Main function
  * @return An integer indicating whether the program ended successfully or not.
@@ -122,58 +138,58 @@ int main()
 	Vertex cube[36];
 	//             Position				Color				UV
 	//Front Face
-	cube[0] = { -0.5f, -0.5f, 0.5f,		100, 255, 255};	// Lower-left
-	cube[1] = { 0.5f, -0.5f, 0.5f,		100, 255, 255};	// Lower-right
-	cube[2] = { 0.5f, 0.5f, 0.5f,		100, 255, 255};	// Upper-right
+	cube[0] = { -0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
+	cube[1] = { 0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-right
+	cube[2] = { 0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
 
-	cube[3] = { 0.5f, 0.5f, 0.5f,		100, 255, 255};	// Upper-right
-	cube[4] = { -0.5f, 0.5f, 0.5f,		100, 255, 255};	// Upper-left
-	cube[5] = { -0.5f, -0.5f, 0.5f,		100, 255, 255};	// Lower-left
+	cube[3] = { 0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
+	cube[4] = { -0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-left
+	cube[5] = { -0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
 
 	//Right Face
-	cube[6] = { 0.5f, -0.5f, 0.5f,		100, 255, 255};	// Lower-left
-	cube[7] = { 0.5f, -0.5f, -0.5f,	    100, 255, 255};	// Lower-right
-	cube[8] = { 0.5f, 0.5f, -0.5f,		100, 255, 255};	// Upper-right
+	cube[6] = { 0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
+	cube[7] = { 0.5f, -0.5f, -0.5f,	    100, 255, 255,   0.0f, 0.0f,};	// Lower-right
+	cube[8] = { 0.5f, 0.5f, -0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
 
-	cube[9] = { 0.5f, 0.5f, -0.5f,		100, 255, 255};	// Upper-right
-	cube[10] = { 0.5f, 0.5f, 0.5f,		100, 255, 255};	// Upper-left
-	cube[11] = { 0.5f, -0.5f, 0.5f,		100, 255, 255};	// Lower-left
+	cube[9] = { 0.5f, 0.5f, -0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
+	cube[10] = { 0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-left
+	cube[11] = { 0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
 
 	//Back Face
-	cube[12] = { 0.5f, -0.5f, -0.5f,	100, 255, 255};	// Lower-left
-	cube[13] = { -0.5f, -0.5f, -0.5f,	100, 255, 255};	// Lower-right
-	cube[14] = { -0.5f, 0.5f, -0.5f,	100, 255, 255};	// Upper-right
+	cube[12] = { 0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
+	cube[13] = { -0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-right
+	cube[14] = { -0.5f, 0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-right
 
-	cube[15] = { -0.5f, 0.5f, -0.5f,	100, 255, 255};	// Upper-right
-	cube[16] = { 0.5f, 0.5f, -0.5f,		100, 255, 255};	// Upper-left
-	cube[17] = { 0.5f, -0.5f, -0.5f,	100, 255, 255};	// Lower-left
+	cube[15] = { -0.5f, 0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-right
+	cube[16] = { 0.5f, 0.5f, -0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-left
+	cube[17] = { 0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
 
 	//Left Face
-	cube[18] = { -0.5f, -0.5f, -0.5f,	100, 255, 255};	// Lower-left
-	cube[19] = { -0.5f, -0.5f, 0.5f,	100, 255, 255};	// Lower-right
-	cube[20] = { -0.5f, 0.5f, 0.5f,		100, 255, 255};	// Upper-right
+	cube[18] = { -0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
+	cube[19] = { -0.5f, -0.5f, 0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-right
+	cube[20] = { -0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
 
-	cube[21] = { -0.5f, 0.5f, 0.5f,		100, 255, 255};	// Upper-right
-	cube[22] = { -0.5f, 0.5f, -0.5f,	100, 255, 255};	// Upper-left
-	cube[23] = { -0.5f, -0.5f, -0.5f,	100, 255, 255};	// Lower-left
+	cube[21] = { -0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
+	cube[22] = { -0.5f, 0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-left
+	cube[23] = { -0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
 
 	//Top Face
-	cube[24] = { -0.5f, 0.5f, 0.5f,		100, 255, 255};	// Lower-left
-	cube[25] = { 0.5f, 0.5f, 0.5f,		100, 255, 255};	// Lower-right
-	cube[26] = { 0.5f, 0.5f, -0.5f,		100, 255, 255};	// Upper-right
+	cube[24] = { -0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
+	cube[25] = { 0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-right
+	cube[26] = { 0.5f, 0.5f, -0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
 
-	cube[27] = { 0.5f, 0.5f, -0.5f,		100, 255, 255};	// Upper-right
-	cube[28] = { -0.5f, 0.5f, -0.5f,	100, 255, 255};	// Upper-left
-	cube[29] = { -0.5f, 0.5f, 0.5f,		100, 255, 255};	// Lower-left
+	cube[27] = { 0.5f, 0.5f, -0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
+	cube[28] = { -0.5f, 0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-left
+	cube[29] = { -0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
 
 	//Bottom Face
-	cube[30] = { 0.5f, -0.5f, -0.5f,	100, 255, 255};	// Lower-left
-	cube[31] = { 0.5f, -0.5f, 0.5f,		100, 255, 255};	// Lower-right
-	cube[32] = { -0.5f, -0.5f, 0.5f,	100, 255, 255};	// Upper-right
+	cube[30] = { 0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
+	cube[31] = { 0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-right
+	cube[32] = { -0.5f, -0.5f, 0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-right
 
-	cube[33] = { -0.5f, -0.5f, 0.5f,	100, 255, 255};	// Upper-right
-	cube[34] = { -0.5f, -0.5f, -0.5f,	100, 255, 255};	// Upper-left
-	cube[35] = { 0.5f, -0.5f, -0.5f,	100, 255, 255};	// Lower-left
+	cube[33] = { -0.5f, -0.5f, 0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-right
+	cube[34] = { -0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-left
+	cube[35] = { 0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
 
 
 	//set normal for cube
@@ -214,13 +230,13 @@ int main()
 
 	Vertex plane[6];
 	//Plane face
-	plane[0] = { -0.5f, 0.f, 0.5f,		160,  82,  45,  0.0f, 1.0f, 0.0f };	// Lower-left
-	plane[1] = { 0.5f, 0.f, 0.5f,		160,  82,  45,  0.0f, 1.0f, 0.0f };	// Lower-right
-	plane[2] = { 0.5f, 0.f, -0.5f,		160,  82,  45,  0.0f, 1.0f, 0.0f };	// Upper-right
+	plane[0] = { -0.5f, 0.f, 0.5f,		160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Lower-left
+	plane[1] = { 0.5f, 0.f, 0.5f,		160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Lower-right
+	plane[2] = { 0.5f, 0.f, -0.5f,		160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Upper-right
 
-	plane[3] = { 0.5f, 0.f, -0.5f,		160,  82,  45,  0.0f, 1.0f, 0.0f };	// Upper-right
-	plane[4] = { -0.5f, 0.f, -0.5f,	    160,  82,  45,  0.0f, 1.0f, 0.0f };	// Upper-left
-	plane[5] = { -0.5f, 0.f, 0.5f,		160,  82,  45,  0.0f, 1.0f, 0.0f };	// Lower-left
+	plane[3] = { 0.5f, 0.f, -0.5f,		160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Upper-right
+	plane[4] = { -0.5f, 0.f, -0.5f,	    160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Upper-left
+	plane[5] = { -0.5f, 0.f, 0.5f,		160,  82,  45,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f };	// Lower-left
 
 	
 	// Create a vertex buffer object (VBO), and upload our vertices data to the VBO
@@ -253,8 +269,12 @@ int main()
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)(sizeof(GLfloat) * 3));
 
-	// Vertex attribute 2 - Normal coordinates
+	// Vertex attribute 2 - UV coordinate
 	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, u)));
+
+	// Vertex attribute 3 - Normal coordinates
+	glEnableVertexAttribArray(3);
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, nx)));
 	glBindVertexArray(0);
 
@@ -274,12 +294,15 @@ int main()
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)(sizeof(GLfloat) * 3));
 
-	// Vertex attribute 2 - Normal coordinates
+	// Vertex attribute 2 - UV coordinate
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, nx)));
-	glBindVertexArray(0);
-	
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, u)));
 
+	// Vertex attribute 3 - Normal coordinates
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, nx)));
+	
+	glBindVertexArray(0);
 
 	// FRAMEBUFFERS
 	//
@@ -316,21 +339,90 @@ int main()
 	// For now, tell OpenGL to use the whole screen
 	glViewport(0, 0, windowWidth, windowHeight);
 
+
+	// Create a variable that will contain the ID for our texture,
+	// and use glGenTextures() to generate the texture itself
+	GLuint cubeTex;
+	glGenTextures(1, &cubeTex);
+
+	// --- Load our image using stb_image ---
+
+	// Im image-space (pixels), (0, 0) is the upper-left corner of the image
+	// However, in u-v coordinates, (0, 0) is the lower-left corner of the image
+	// This means that the image will appear upside-down when we use the image data as is
+	// This function tells stbi to flip the image vertically so that it is not upside-down when we use it
+	stbi_set_flip_vertically_on_load(true);
+
+	// 'imageWidth' and imageHeight will contain the width and height of the loaded image respectively
+	int imageWidth, imageHeight, numChannels;
+
+	// Read the image data and store it in an unsigned char array
+	unsigned char* imageData = stbi_load("", &imageWidth, &imageHeight, &numChannels, 0);
+
+	// Make sure that we actually loaded the image before uploading the data to the GPU
+	if (imageData != nullptr)
+	{
+		// Our texture is 2D, so we bind our texture to the GL_TEXTURE_2D target
+		glBindTexture(GL_TEXTURE_2D, cubeTex);
+
+		// Set the filtering methods for magnification and minification
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+		// Set the wrapping method for the s-axis (x-axis) and t-axis (y-axis)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// Upload the image data to GPU memory
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+
+		// If we set minification to use mipmaps, we can tell OpenGL to generate the mipmaps for us
+		//glGenerateMipmap(GL_TEXTURE_2D);
+
+		// Once we have copied the data over to the GPU, we can delete
+		// the data on the CPU side, since we won't be using it anymore
+		stbi_image_free(imageData);
+		imageData = nullptr;
+	}
+	else
+	{
+		std::cerr << "Failed to load image" << std::endl;
+	}
+
+
 	glEnable(GL_DEPTH_TEST);
 
-	cubeMatrix = glm::scale(cubeMatrix, glm::vec3(1.0f, 1.0f, 1.0f));
-	cubeMatrix = glm::translate(cubeMatrix, glm::vec3(0.0f, 0.6f, 0.0f));
+	floorTile02 = glm::translate(floorTile02, glm::vec3(0.0f, 0.0f, -1.0f));
+	floorTile03 = glm::translate(floorTile03, glm::vec3(0.0f, 0.0f, -2.0f));
+	floorTile04 = glm::translate(floorTile04, glm::vec3(0.0f, 0.0f, -3.0f));
+	floorTile05 = glm::translate(floorTile05, glm::vec3(0.0f, 0.0f, -4.0f));
 
-	cubeMatrix2 = glm::scale(cubeMatrix2, glm::vec3(0.8f, 0.8f, 0.8f));
-	cubeMatrix2 = glm::translate(cubeMatrix2, glm::vec3(4.f, 0.5f, 0.f));
-
-	cubeMatrix3 = glm::scale(cubeMatrix3, glm::vec3(1.0f, 1.0f, 1.0f));
-	cubeMatrix3 = glm::translate(cubeMatrix3, glm::vec3(0.0f, 0.5f, 3.5f));
+	wallTileL01 = glm::translate(wallTileL01, glm::vec3(-0.5f, 0.5f, 0.0f));
+	wallTileL01 = glm::rotate(wallTileL01, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL02 = glm::translate(wallTileL02, glm::vec3(-0.5f, 0.5f, -1.0f));
+	wallTileL02 = glm::rotate(wallTileL02, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL03 = glm::translate(wallTileL03, glm::vec3(-0.5f, 0.5f, -2.0f));
+	wallTileL03 = glm::rotate(wallTileL03, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL04 = glm::translate(wallTileL04, glm::vec3(-0.5f, 0.5f, -3.0f));
+	wallTileL04 = glm::rotate(wallTileL04, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL05 = glm::translate(wallTileL05, glm::vec3(-0.5f, 0.5f, -4.0f));
+	wallTileL05 = glm::rotate(wallTileL05, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	
-	planeMatrix = glm::scale(planeMatrix, glm::vec3(10.0f, 10.0f, 10.0f));
+	wallTileR01 = glm::translate(wallTileR01, glm::vec3(0.5f, 0.5f, 0.0f));
+	wallTileR01 = glm::rotate(wallTileR01, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileR02 = glm::translate(wallTileR02, glm::vec3(0.5f, 0.5f, -1.0f));
+	wallTileR02 = glm::rotate(wallTileR02, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileR03 = glm::translate(wallTileR03, glm::vec3(0.5f, 0.5f, -2.0f));
+	wallTileR03 = glm::rotate(wallTileR03, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileR04 = glm::translate(wallTileR04, glm::vec3(0.5f, 0.5f, -3.0f));
+	wallTileR04 = glm::rotate(wallTileR04, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileR05 = glm::translate(wallTileR05, glm::vec3(0.5f, 0.5f, -4.0f));
+	wallTileR05 = glm::rotate(wallTileR05, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
-	glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, -1.0f);
+
+
+	glm::vec3 cameraPosition = glm::vec3(0.0f, 0.5f, 0.0f);
+	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, -3.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	GLfloat angleX = M_PI;
@@ -415,28 +507,38 @@ int main()
 		glBindVertexArray(planeVao);
 
 		GLint planeUniformLocation = glGetUniformLocation(depthshaders, "modelMatrix");
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(planeMatrix));
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile01));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile02));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile03));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile04));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile05));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
-		glBindVertexArray(0);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL01));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL02));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL03));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL04));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL05));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 
-		// CUBE
-		// 
-		//
-		// Use the vertex array object that we created
-		glBindVertexArray(cubeVao);
-
-		GLint cubeUniformLocation = glGetUniformLocation(depthshaders, "modelMatrix");
-
-		glUniformMatrix4fv(cubeUniformLocation, 1, GL_FALSE, glm::value_ptr(cubeMatrix));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		glUniformMatrix4fv(cubeUniformLocation, 1, GL_FALSE, glm::value_ptr(cubeMatrix2));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		glUniformMatrix4fv(cubeUniformLocation, 1, GL_FALSE, glm::value_ptr(cubeMatrix3));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR01));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR02));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR03));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR04));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR05));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
 
 
@@ -462,32 +564,40 @@ int main()
 		glBindVertexArray(planeVao);
 
 		planeUniformLocation = glGetUniformLocation(program, "modelMatrix");
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(planeMatrix));
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile01));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile02));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile03));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile04));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile05));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL01));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL02));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL03));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL04));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL05));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR01));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR02));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR03));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR04));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR05));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
 
-		// CUBE
-		// 
-		//
-		// Use the vertex array object that we created
-		glBindVertexArray(cubeVao);
-
-		cubeUniformLocation = glGetUniformLocation(program, "modelMatrix");
-		
-
-		
-
-		glUniformMatrix4fv(cubeUniformLocation, 1, GL_FALSE, glm::value_ptr(cubeMatrix));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		glUniformMatrix4fv(cubeUniformLocation, 1, GL_FALSE, glm::value_ptr(cubeMatrix2));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		glUniformMatrix4fv(cubeUniformLocation, 1, GL_FALSE, glm::value_ptr(cubeMatrix3));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		glBindVertexArray(0);
 
 		GLint cameraPositionUniformLocation = glGetUniformLocation(program, "cameraPosition");
 		GLint objectSpecUniformLocation = glGetUniformLocation(program, "objectSpec");
