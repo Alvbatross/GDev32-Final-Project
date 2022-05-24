@@ -340,54 +340,54 @@ int main()
 	glViewport(0, 0, windowWidth, windowHeight);
 
 
-	// Create a variable that will contain the ID for our texture,
-	// and use glGenTextures() to generate the texture itself
-	GLuint cubeTex;
-	glGenTextures(1, &cubeTex);
+	//// Create a variable that will contain the ID for our texture,
+	//// and use glGenTextures() to generate the texture itself
+	//GLuint cubeTex;
+	//glGenTextures(1, &cubeTex);
 
-	// --- Load our image using stb_image ---
+	//// --- Load our image using stb_image ---
 
-	// Im image-space (pixels), (0, 0) is the upper-left corner of the image
-	// However, in u-v coordinates, (0, 0) is the lower-left corner of the image
-	// This means that the image will appear upside-down when we use the image data as is
-	// This function tells stbi to flip the image vertically so that it is not upside-down when we use it
-	stbi_set_flip_vertically_on_load(true);
+	//// Im image-space (pixels), (0, 0) is the upper-left corner of the image
+	//// However, in u-v coordinates, (0, 0) is the lower-left corner of the image
+	//// This means that the image will appear upside-down when we use the image data as is
+	//// This function tells stbi to flip the image vertically so that it is not upside-down when we use it
+	//stbi_set_flip_vertically_on_load(true);
 
-	// 'imageWidth' and imageHeight will contain the width and height of the loaded image respectively
-	int imageWidth, imageHeight, numChannels;
+	//// 'imageWidth' and imageHeight will contain the width and height of the loaded image respectively
+	//int imageWidth, imageHeight, numChannels;
 
-	// Read the image data and store it in an unsigned char array
-	unsigned char* imageData = stbi_load("", &imageWidth, &imageHeight, &numChannels, 0);
+	//// Read the image data and store it in an unsigned char array
+	//unsigned char* imageData = stbi_load("", &imageWidth, &imageHeight, &numChannels, 0);
 
-	// Make sure that we actually loaded the image before uploading the data to the GPU
-	if (imageData != nullptr)
-	{
-		// Our texture is 2D, so we bind our texture to the GL_TEXTURE_2D target
-		glBindTexture(GL_TEXTURE_2D, cubeTex);
+	//// Make sure that we actually loaded the image before uploading the data to the GPU
+	//if (imageData != nullptr)
+	//{
+	//	// Our texture is 2D, so we bind our texture to the GL_TEXTURE_2D target
+	//	glBindTexture(GL_TEXTURE_2D, cubeTex);
 
-		// Set the filtering methods for magnification and minification
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//	// Set the filtering methods for magnification and minification
+	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-		// Set the wrapping method for the s-axis (x-axis) and t-axis (y-axis)
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//	// Set the wrapping method for the s-axis (x-axis) and t-axis (y-axis)
+	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		// Upload the image data to GPU memory
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+	//	// Upload the image data to GPU memory
+	//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
 
-		// If we set minification to use mipmaps, we can tell OpenGL to generate the mipmaps for us
-		//glGenerateMipmap(GL_TEXTURE_2D);
+	//	// If we set minification to use mipmaps, we can tell OpenGL to generate the mipmaps for us
+	//	//glGenerateMipmap(GL_TEXTURE_2D);
 
-		// Once we have copied the data over to the GPU, we can delete
-		// the data on the CPU side, since we won't be using it anymore
-		stbi_image_free(imageData);
-		imageData = nullptr;
-	}
-	else
-	{
-		std::cerr << "Failed to load image" << std::endl;
-	}
+	//	// Once we have copied the data over to the GPU, we can delete
+	//	// the data on the CPU side, since we won't be using it anymore
+	//	stbi_image_free(imageData);
+	//	imageData = nullptr;
+	//}
+	//else
+	//{
+	//	std::cerr << "Failed to load image" << std::endl;
+	//}
 
 
 	glEnable(GL_DEPTH_TEST);
@@ -398,15 +398,15 @@ int main()
 	floorTile05 = glm::translate(floorTile05, glm::vec3(0.0f, 0.0f, -4.0f));
 
 	wallTileL01 = glm::translate(wallTileL01, glm::vec3(-0.5f, 0.5f, 0.0f));
-	wallTileL01 = glm::rotate(wallTileL01, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL01 = glm::rotate(wallTileL01, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL02 = glm::translate(wallTileL02, glm::vec3(-0.5f, 0.5f, -1.0f));
-	wallTileL02 = glm::rotate(wallTileL02, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL02 = glm::rotate(wallTileL02, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL03 = glm::translate(wallTileL03, glm::vec3(-0.5f, 0.5f, -2.0f));
-	wallTileL03 = glm::rotate(wallTileL03, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL03 = glm::rotate(wallTileL03, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL04 = glm::translate(wallTileL04, glm::vec3(-0.5f, 0.5f, -3.0f));
-	wallTileL04 = glm::rotate(wallTileL04, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL04 = glm::rotate(wallTileL04, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL05 = glm::translate(wallTileL05, glm::vec3(-0.5f, 0.5f, -4.0f));
-	wallTileL05 = glm::rotate(wallTileL05, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL05 = glm::rotate(wallTileL05, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	
 	wallTileR01 = glm::translate(wallTileR01, glm::vec3(0.5f, 0.5f, 0.0f));
 	wallTileR01 = glm::rotate(wallTileR01, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -422,12 +422,12 @@ int main()
 
 
 	glm::vec3 cameraPosition = glm::vec3(0.0f, 0.5f, 0.0f);
-	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, -3.0f);
+	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.5f, -3.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	GLfloat angleX = M_PI;
 	GLfloat angleY = 0.0f;
-	GLfloat camSpeed = 1.0f;
+	GLfloat camSpeed = 0.5f;
 	GLfloat mouseSpeed = 0.5f;
 
 	GLfloat prevTime = glfwGetTime();
@@ -459,12 +459,12 @@ int main()
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
-			cameraPosition += camSpeed * cameraTarget * deltaTime;
+			cameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
 			std::cout << cameraPosition.z << std::endl;
 		}
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
-			cameraPosition -= camSpeed * cameraTarget * deltaTime;
+			cameraPosition -= camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
 			std::cout << cameraPosition.z << std::endl;
 		}
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
@@ -608,6 +608,12 @@ int main()
 		GLint dirLightDiffuseUniformLocation = glGetUniformLocation(program, "lightDiffuse");
 		GLint dirLightSpecularUniformLocation = glGetUniformLocation(program, "lightSpecular");
 
+		GLint sLightAmbientUniformLocation = glGetUniformLocation(program, "sLightAmbient");
+		GLint sLightDiffuseUniformLocation = glGetUniformLocation(program, "sLightDiffuse");
+		GLint sLightSpecularUniformLocation = glGetUniformLocation(program, "sLightSpecular");
+		GLint spotLightPositionUniformLocation = glGetUniformLocation(program, "spotLightPosition");
+		GLint spotLightDirectionUniformLocation = glGetUniformLocation(program, "spotLightDirection");
+
 		GLint dirLightProjectionUniformLocation2 = glGetUniformLocation(program, "lightProjection");
 		GLint dirLightViewUniformLocation2 = glGetUniformLocation(program, "lightView");
 		
@@ -619,6 +625,13 @@ int main()
 		glUniform3f(dirLightAmbientUniformLocation, 1.f, 0.f, 0.f);
 		glUniform3f(dirLightDiffuseUniformLocation, 0.f, 1.f, 0.f);
 		glUniform3f(dirLightSpecularUniformLocation, 0.f, 0.f, 1.f);
+
+		glUniform3f(sLightAmbientUniformLocation, 1.0f, 1.0f, 1.0f);
+		glUniform3f(sLightDiffuseUniformLocation, 1.0f, 1.0f, 1.0f);
+		glUniform3f(sLightSpecularUniformLocation, 1.0f, 1.0f, 1.0f);
+
+		glUniform3f(spotLightPositionUniformLocation,  cameraPosition.x, cameraPosition.y, cameraPosition.z);
+		glUniform3f(spotLightDirectionUniformLocation, cameraTarget.x, cameraTarget.y, cameraTarget.z);
 
 		glUniformMatrix4fv(dirLightProjectionUniformLocation2, 1, GL_FALSE, glm::value_ptr(lightProjection));
 		glUniformMatrix4fv(dirLightViewUniformLocation2, 1, GL_FALSE, glm::value_ptr(lightView));
