@@ -170,6 +170,8 @@ int main()
 	// Tell GLFW to create a window
 	int windowWidth = 800;
 	int windowHeight = 800;
+	int shadowMapHeight = 2048 * 8;
+	int shadowMapWidth = 2048 * 8;
 	GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, "Final Project - Horror game", nullptr, nullptr);
 	if (window == nullptr)
 	{
@@ -192,100 +194,6 @@ int main()
 	}
 
 	// --- Vertex specification ---
-	
-	// Set up the data for each vertex of the triangle
-	Vertex cube[36];
-	//             Position				Color				UV
-	//Front Face
-	cube[0] = { -0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-	cube[1] = { 0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-right
-	cube[2] = { 0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-
-	cube[3] = { 0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-	cube[4] = { -0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-left
-	cube[5] = { -0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-
-	//Right Face
-	cube[6] = { 0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-	cube[7] = { 0.5f, -0.5f, -0.5f,	    100, 255, 255,   0.0f, 0.0f,};	// Lower-right
-	cube[8] = { 0.5f, 0.5f, -0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-
-	cube[9] = { 0.5f, 0.5f, -0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-	cube[10] = { 0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-left
-	cube[11] = { 0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-
-	//Back Face
-	cube[12] = { 0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-	cube[13] = { -0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-right
-	cube[14] = { -0.5f, 0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-
-	cube[15] = { -0.5f, 0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-	cube[16] = { 0.5f, 0.5f, -0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-left
-	cube[17] = { 0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-
-	//Left Face
-	cube[18] = { -0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-	cube[19] = { -0.5f, -0.5f, 0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-right
-	cube[20] = { -0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-
-	cube[21] = { -0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-	cube[22] = { -0.5f, 0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-left
-	cube[23] = { -0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-
-	//Top Face
-	cube[24] = { -0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-	cube[25] = { 0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-right
-	cube[26] = { 0.5f, 0.5f, -0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-
-	cube[27] = { 0.5f, 0.5f, -0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-	cube[28] = { -0.5f, 0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-left
-	cube[29] = { -0.5f, 0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-
-	//Bottom Face
-	cube[30] = { 0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-	cube[31] = { 0.5f, -0.5f, 0.5f,		100, 255, 255,   0.0f, 0.0f,};	// Lower-right
-	cube[32] = { -0.5f, -0.5f, 0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-
-	cube[33] = { -0.5f, -0.5f, 0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-right
-	cube[34] = { -0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Upper-left
-	cube[35] = { 0.5f, -0.5f, -0.5f,	100, 255, 255,   0.0f, 0.0f,};	// Lower-left
-
-
-	//set normal for cube
-
-	for (int i = 0; i < 36; i += 3) {
-		GLfloat x0 = cube[i].x;
-		GLfloat y0 = cube[i].y;
-		GLfloat z0 = cube[i].z;
-
-		GLfloat x1 = cube[i + 1].x;
-		GLfloat y1 = cube[i + 1].y;
-		GLfloat z1 = cube[i + 1].z;
-
-		GLfloat x2 = cube[i + 2].x;
-		GLfloat y2 = cube[i + 2].y;
-		GLfloat z2 = cube[i + 2].z;
-
-		GLfloat vx0 = x2 - x0;
-		GLfloat vy0 = y2 - y0;
-		GLfloat vz0 = z2 - z0;
-
-		GLfloat vx1 = x1 - x0;
-		GLfloat vy1 = y1 - y0;
-		GLfloat vz1 = z1 - z0;
-
-		glm::vec3 cubeNormal = glm::cross(glm::vec3(vx1, vy1, vz1), glm::vec3(vx0, vy0, vz0));
-
-		cube[i].nx = cubeNormal.x;
-		cube[i].ny = cubeNormal.y;
-		cube[i].nz = cubeNormal.z;
-		cube[i + 1].nx = cubeNormal.x;
-		cube[i + 1].ny = cubeNormal.y;
-		cube[i + 1].nz = cubeNormal.z;
-		cube[i + 2].nx = cubeNormal.x;
-		cube[i + 2].ny = cubeNormal.y;
-		cube[i + 2].nz = cubeNormal.z;
-	}
 
 	Vertex plane[6];
 	//Plane face
@@ -352,11 +260,6 @@ int main()
 
 
 	// Create a vertex buffer object (VBO), and upload our vertices data to the VBO
-	GLuint cubeVbo;
-	glGenBuffers(1, &cubeVbo);
-	glBindBuffer(GL_ARRAY_BUFFER, cubeVbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(cube), cube, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	GLuint planeVbo;
 	glGenBuffers(1, &planeVbo);
@@ -378,30 +281,6 @@ int main()
 
 	// Create a vertex array object that contains data on how to map vertex attributes
 	// (e.g., position, color) to vertex shader properties.
-
-	// cube
-	GLuint cubeVao;
-	glGenVertexArrays(1, &cubeVao);
-	glBindVertexArray(cubeVao);
-	glBindBuffer(GL_ARRAY_BUFFER, cubeVbo);
-	
-	// Vertex attribute 0 - Position
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-
-	// Vertex attribute 1 - Color
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)(sizeof(GLfloat) * 3));
-
-	// Vertex attribute 2 - UV coordinate
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, u)));
-
-	// Vertex attribute 3 - Normal coordinates
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, nx)));
-	glBindVertexArray(0);
-
 
 	// plane
 	GLuint planeVao;
@@ -471,7 +350,7 @@ int main()
 	glGenTextures(1, &fboTex);
 	glBindTexture(GL_TEXTURE_2D, fboTex);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowMapHeight, shadowMapWidth, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -1299,7 +1178,7 @@ int main()
 		//
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 		glClear(GL_DEPTH_BUFFER_BIT);
-		glViewport(0, 0, 1024, 1024);
+		glViewport(0, 0, shadowMapHeight, shadowMapWidth);
 		glUseProgram(depthshaders);
 		
 
@@ -1307,7 +1186,7 @@ int main()
 		GLint dirLightViewUniformLocation = glGetUniformLocation(depthshaders, "lightView");
 		GLint dirModelMatrix = glGetUniformLocation(depthshaders, "modelMatrix");
 
-		glm::vec3 lightPosition = glm::vec3(5.0f, 5.0f, 5.0f);
+		glm::vec3 lightPosition = glm::vec3(-2.0f, 5.0f, 5.0f);
 		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 50.0f);
 		glm::mat4 lightView = glm::lookAt(lightPosition, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		
@@ -1762,13 +1641,13 @@ int main()
 		GLint dirLightViewUniformLocation2 = glGetUniformLocation(program, "lightView");
 		
 		glUniform3fv(cameraPositionUniformLocation, 1, glm::value_ptr(cameraPosition));
-		glUniform3f(objectSpecUniformLocation, 1.0f, 1.0f, 1.0f);
-		glUniform1f(objectShineUniformLocation, 100.f);
+		glUniform3f(objectSpecUniformLocation, 0.2f, 0.2f, 0.2f);
+		glUniform1f(objectShineUniformLocation, 50.f);
 		glUniform3f(dirLightDirUniformLocation, -0.25f, -1.0f, -0.25f);
 
-		glUniform3f(dirLightAmbientUniformLocation, 1.f, 0.f, 0.f);
-		glUniform3f(dirLightDiffuseUniformLocation, 0.f, 1.f, 0.f);
-		glUniform3f(dirLightSpecularUniformLocation, 0.f, 0.f, 1.f);
+		glUniform3f(dirLightAmbientUniformLocation, 0.75f, 0.75f, 0.75f);
+		glUniform3f(dirLightDiffuseUniformLocation, 0.75f, 0.75f, 0.75f);
+		glUniform3f(dirLightSpecularUniformLocation, 0.75f, 0.75f, 0.75f);
 
 		glUniform3f(sLightAmbientUniformLocation, 1.0f, 1.0f, 1.0f);
 		glUniform3f(sLightDiffuseUniformLocation, 1.0f, 1.0f, 1.0f);
@@ -1810,13 +1689,11 @@ int main()
 	glDeleteProgram(program);
 
 	// Delete the VBO that contains our vertices
-	glDeleteBuffers(1, &cubeVbo);
 	glDeleteBuffers(1, &planeVbo);
 	glDeleteBuffers(1, &floorVbo);
 	glDeleteBuffers(1, &skyboxVbo);
 
 	// Delete the vertex array object
-	glDeleteVertexArrays(1, &cubeVao);
 	glDeleteVertexArrays(1, &planeVao);
 	glDeleteVertexArrays(1, &floorVao);
 	glDeleteVertexArrays(1, &skyboxVao);

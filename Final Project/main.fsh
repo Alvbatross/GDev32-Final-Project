@@ -26,7 +26,7 @@ void main()
 	vec3 ambient, diffuse, specular;
 	vec3 finalColor;
 
-	fragColor = texture(tex, outUV);
+	fragColor = texture(tex, outUV) * 0.5;
 
 	vec3 norm = normalize(fragNormal);
 	vec3 viewDir = normalize(cameraPosition - fragPosition);
@@ -56,42 +56,40 @@ void main()
 
 	finalColor = ambient * vec3(fragColor);
 
-	//if(depthValue.x >= flNDCz - 0.000005)
-	//{
-		//float directionalLightDiff = max(dot(norm, directionalLightDir), 0.0f);
-		//vec3 directionalLightDiffuse = directionalLightDiff * lightDiffuse * vec3(fragColor);
+	if(depthValue.x >= flNDCz - 0.000005)
+	{
+		float directionalLightDiff = max(dot(norm, directionalLightDir), 0.0f);
+		vec3 directionalLightDiffuse = directionalLightDiff * lightDiffuse * vec3(fragColor);
 
-		//vec3 directionalLightReflectDir = reflect(-directionalLightDir, norm);
+		vec3 directionalLightReflectDir = reflect(-directionalLightDir, norm);
 
-		//float directionalLightSpec = pow(max(dot(viewDir, directionalLightReflectDir), 0.0f), objectShine);
-		//vec3 directionalLightSpecular = directionalLightSpec * lightSpecular * objectSpec;
-
-
-		float spotLightDiff = max(dot(norm, spotLightDir), 0.0f);
-		vec3 spotLightDiffuse = spotLightDiff * sLightDiffuse * vec3(fragColor);
-
-		vec3 spotLightReflectDir = reflect(-spotLightDir, norm);
-		float spotLightSpec = pow(max(dot(viewDir, spotLightReflectDir), 0.0f), objectShine);
-		vec3 spotLightSpecular = spotLightSpec * sLightSpecular * objectSpec;
-
-		float outerAngle = cutOff - outerCutOff;
-		float spotLightIntensity = clamp((spotAngle - outerCutOff) / outerAngle, 0.0f, 1.0f);
-
-		spotLightDiffuse *= spotLightIntensity;
-		spotLightSpecular *= spotLightIntensity;
-
-		float spotLightDistance = length(spotLightPosition - fragPosition);
-		float spotLightAttenuation = 1.0 / (sLightConstant + (sLightLinear * spotLightDistance) + (sLightQuadratic * (spotLightDistance * spotLightDistance)));
-		
-		diffuse = vec3(spotLightDiffuse) * spotLightAttenuation;
-		specular = vec3(spotLightSpecular) * spotLightAttenuation;
+		float directionalLightSpec = pow(max(dot(viewDir, directionalLightReflectDir), 0.0f), objectShine);
+		vec3 directionalLightSpecular = directionalLightSpec * lightSpecular * objectSpec;
 
 		
-
-		finalColor = (finalColor + diffuse + specular);
-
+		diffuse = directionalLightDiffuse;
+		specular = directionalLightSpecular;
 		// Pass the final color to our fragColor output variable
-	//}
+	}
 
+	float spotLightDiff = max(dot(norm, spotLightDir), 0.0f);
+	vec3 spotLightDiffuse = spotLightDiff * sLightDiffuse * vec3(fragColor);
+
+	vec3 spotLightReflectDir = reflect(-spotLightDir, norm);
+	float spotLightSpec = pow(max(dot(viewDir, spotLightReflectDir), 0.0f), objectShine);
+	vec3 spotLightSpecular = spotLightSpec * sLightSpecular * objectSpec;
+	float outerAngle = cutOff - outerCutOff;
+	float spotLightIntensity = clamp((spotAngle - outerCutOff) / outerAngle, 0.0f, 1.0f);
+
+	spotLightDiffuse *= spotLightIntensity;
+	spotLightSpecular *= spotLightIntensity;
+
+	float spotLightDistance = length(spotLightPosition - fragPosition);
+	float spotLightAttenuation = 1.0 / (sLightConstant + (sLightLinear * spotLightDistance) + (sLightQuadratic * (spotLightDistance * spotLightDistance)));
+		
+	diffuse = diffuse + (vec3(spotLightDiffuse) * spotLightAttenuation);
+	specular = specular + (vec3(spotLightSpecular) * spotLightAttenuation);
+
+	finalColor = (finalColor + diffuse + specular);
 	color = vec4(finalColor, 1.0f);
 }
