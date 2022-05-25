@@ -64,22 +64,28 @@ struct Vertex
 };
 
 glm::mat4 floorTile01 = glm::mat4(1.0f);
-glm::mat4 floorTile02 = glm::mat4(1.0f);
-glm::mat4 floorTile03 = glm::mat4(1.0f);
-glm::mat4 floorTile04 = glm::mat4(1.0f);
-glm::mat4 floorTile05 = glm::mat4(1.0f);
 
-glm::mat4 wallTileR01 = glm::mat4(1.0f);
-glm::mat4 wallTileR02 = glm::mat4(1.0f);
-glm::mat4 wallTileR03 = glm::mat4(1.0f);
-glm::mat4 wallTileR04 = glm::mat4(1.0f);
-glm::mat4 wallTileR05 = glm::mat4(1.0f);
+glm::mat4 wallTileR01 = glm::mat4(1.0f); glm::mat4 wallTileR02 = glm::mat4(1.0f); glm::mat4 wallTileR03 = glm::mat4(1.0f);
+glm::mat4 wallTileR04 = glm::mat4(1.0f); glm::mat4 wallTileR05 = glm::mat4(1.0f); glm::mat4 wallTileR06 = glm::mat4(1.0f);
+glm::mat4 wallTileR07 = glm::mat4(1.0f); glm::mat4 wallTileR08 = glm::mat4(1.0f); glm::mat4 wallTileR09 = glm::mat4(1.0f);
+glm::mat4 wallTileR10 = glm::mat4(1.0f); glm::mat4 wallTileR11 = glm::mat4(1.0f); glm::mat4 wallTileR12 = glm::mat4(1.0f);
 
-glm::mat4 wallTileL01 = glm::mat4(1.0f);
-glm::mat4 wallTileL02 = glm::mat4(1.0f);
-glm::mat4 wallTileL03 = glm::mat4(1.0f);
-glm::mat4 wallTileL04 = glm::mat4(1.0f);
-glm::mat4 wallTileL05 = glm::mat4(1.0f);
+glm::mat4 wallTileL01 = glm::mat4(1.0f); glm::mat4 wallTileL02 = glm::mat4(1.0f); glm::mat4 wallTileL03 = glm::mat4(1.0f); 
+glm::mat4 wallTileL04 = glm::mat4(1.0f); glm::mat4 wallTileL05 = glm::mat4(1.0f); glm::mat4 wallTileL06 = glm::mat4(1.0f); 
+glm::mat4 wallTileL07 = glm::mat4(1.0f); glm::mat4 wallTileL08 = glm::mat4(1.0f); glm::mat4 wallTileL09 = glm::mat4(1.0f); 
+glm::mat4 wallTileL10 = glm::mat4(1.0f); glm::mat4 wallTileL11 = glm::mat4(1.0f); glm::mat4 wallTileL12 = glm::mat4(1.0f); 
+glm::mat4 wallTileL13 = glm::mat4(1.0f); glm::mat4 wallTileL14 = glm::mat4(1.0f); glm::mat4 wallTileL15 = glm::mat4(1.0f); 
+glm::mat4 wallTileL16 = glm::mat4(1.0f); glm::mat4 wallTileL17 = glm::mat4(1.0f); glm::mat4 wallTileL18 = glm::mat4(1.0f); 
+glm::mat4 wallTileL19 = glm::mat4(1.0f); glm::mat4 wallTileL20 = glm::mat4(1.0f); glm::mat4 wallTileL21 = glm::mat4(1.0f); 
+glm::mat4 wallTileL22 = glm::mat4(1.0f); glm::mat4 wallTileL23 = glm::mat4(1.0f); glm::mat4 wallTileL24 = glm::mat4(1.0f); 
+glm::mat4 wallTileL25 = glm::mat4(1.0f); glm::mat4 wallTileL26 = glm::mat4(1.0f); glm::mat4 wallTileL27 = glm::mat4(1.0f); 
+glm::mat4 wallTileL28 = glm::mat4(1.0f); glm::mat4 wallTileL29 = glm::mat4(1.0f); glm::mat4 wallTileL30 = glm::mat4(1.0f); 
+glm::mat4 wallTileL31 = glm::mat4(1.0f); glm::mat4 wallTileL32 = glm::mat4(1.0f); glm::mat4 wallTileL33 = glm::mat4(1.0f); 
+glm::mat4 wallTileL34 = glm::mat4(1.0f); glm::mat4 wallTileL35 = glm::mat4(1.0f); glm::mat4 wallTileL36 = glm::mat4(1.0f); 
+glm::mat4 wallTileL37 = glm::mat4(1.0f); glm::mat4 wallTileL38 = glm::mat4(1.0f); glm::mat4 wallTileL39 = glm::mat4(1.0f); 
+glm::mat4 wallTileL40 = glm::mat4(1.0f); glm::mat4 wallTileL41 = glm::mat4(1.0f); glm::mat4 wallTileL42 = glm::mat4(1.0f);
+glm::mat4 wallTileL43 = glm::mat4(1.0f); glm::mat4 wallTileL44 = glm::mat4(1.0f); glm::mat4 wallTileL45 = glm::mat4(1.0f);
+glm::mat4 wallTileL46 = glm::mat4(1.0f); glm::mat4 wallTileL47 = glm::mat4(1.0f); glm::mat4 wallTileL48 = glm::mat4(1.0f);
 
 glm::mat4 camera;
 glm::mat4 perspective;
@@ -111,7 +117,7 @@ int main()
 	// Tell GLFW to create a window
 	int windowWidth = 800;
 	int windowHeight = 800;
-	GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, "Lab 3 - Shadow Mapping", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, "Final Project - Horror game oh no", nullptr, nullptr);
 	if (window == nullptr)
 	{
 		std::cerr << "Failed to create GLFW window!" << std::endl;
@@ -481,7 +487,7 @@ int main()
 
 	glEnable(GL_DEPTH_TEST);
 
-	floorTile01 = glm::scale(floorTile01, glm::vec3(10.0f, 1.0f, 10.0f));
+	floorTile01 = glm::scale(floorTile01, glm::vec3(9.0f, 1.0f, 9.0f));
 
 	wallTileL01 = glm::translate(wallTileL01, glm::vec3(-0.5f, 0.5f, 0.0f));
 	wallTileL01 = glm::rotate(wallTileL01, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -491,9 +497,151 @@ int main()
 	wallTileL03 = glm::rotate(wallTileL03, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL04 = glm::translate(wallTileL04, glm::vec3(-0.5f, 0.5f, -3.0f));
 	wallTileL04 = glm::rotate(wallTileL04, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	wallTileL05 = glm::translate(wallTileL05, glm::vec3(-0.5f, 0.5f, -4.0f));
+	wallTileL05 = glm::translate(wallTileL05, glm::vec3(-1.0f, 0.5f, -3.5f));
 	wallTileL05 = glm::rotate(wallTileL05, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	
+	wallTileL05 = glm::rotate(wallTileL05, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL06 = glm::translate(wallTileL06, glm::vec3(-0.5f, 0.5f, 2.0f));
+	wallTileL06 = glm::rotate(wallTileL06, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL07 = glm::translate(wallTileL07, glm::vec3(-0.5f, 0.5f, 3.0f));
+	wallTileL07 = glm::rotate(wallTileL07, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL08 = glm::translate(wallTileL08, glm::vec3(-0.5f, 0.5f, 4.0f));
+	wallTileL08 = glm::rotate(wallTileL08, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL09 = glm::translate(wallTileL09, glm::vec3(-0.5f, 0.5f, 5.0f));
+	wallTileL09 = glm::rotate(wallTileL09, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+
+    // North West Quadrant
+	wallTileL10 = glm::translate(wallTileL10, glm::vec3(-2.0f, 0.5f, -3.5f));
+	wallTileL10 = glm::rotate(wallTileL10, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL10 = glm::rotate(wallTileL10, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	wallTileL11 = glm::translate(wallTileL11, glm::vec3(-2.5f, 0.5f, -3.0f));
+	wallTileL11 = glm::rotate(wallTileL11, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL12 = glm::translate(wallTileL12, glm::vec3(-2.5f, 0.5f, -2.0f));
+	wallTileL12 = glm::rotate(wallTileL12, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL13 = glm::translate(wallTileL13, glm::vec3(-2.0f, 0.5f, -1.5f));
+	wallTileL13 = glm::rotate(wallTileL13, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL13 = glm::rotate(wallTileL13, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL14 = glm::translate(wallTileL14, glm::vec3(-2.0f, 0.5f, -0.5f));
+	wallTileL14 = glm::rotate(wallTileL14, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL14 = glm::rotate(wallTileL14, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	wallTileL15 = glm::translate(wallTileL15, glm::vec3(-1.5f, 0.5f, -1.0f));
+	wallTileL15 = glm::rotate(wallTileL15, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL16 = glm::translate(wallTileL16, glm::vec3(-3.0f, 0.5f, -0.5f));
+	wallTileL16 = glm::rotate(wallTileL16, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL16 = glm::rotate(wallTileL16, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL17 = glm::translate(wallTileL17, glm::vec3(-4.0f, 0.5f, -0.5f));
+	wallTileL17 = glm::rotate(wallTileL17, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL17 = glm::rotate(wallTileL17, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL18 = glm::translate(wallTileL18, glm::vec3(-4.5f, 0.5f, -1.0f));
+	wallTileL18 = glm::rotate(wallTileL18, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL19 = glm::translate(wallTileL19, glm::vec3(-4.0f, 0.5f, -1.5f));
+	wallTileL19 = glm::rotate(wallTileL19, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL19 = glm::rotate(wallTileL19, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL20 = glm::translate(wallTileL20, glm::vec3(-3.5f, 0.5f, -2.0f));
+	wallTileL20 = glm::rotate(wallTileL20, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL21 = glm::translate(wallTileL21, glm::vec3(-3.5f, 0.5f, -3.0f));
+	wallTileL21 = glm::rotate(wallTileL21, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL22 = glm::translate(wallTileL22, glm::vec3(-3.5f, 0.5f, -4.0f));
+	wallTileL22 = glm::rotate(wallTileL22, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL23 = glm::translate(wallTileL23, glm::vec3(-3.0f, 0.5f, -4.5f));
+	wallTileL23 = glm::rotate(wallTileL23, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL23 = glm::rotate(wallTileL23, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL24 = glm::translate(wallTileL24, glm::vec3(-2.0f, 0.5f, -4.5f));
+	wallTileL24 = glm::rotate(wallTileL24, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL24 = glm::rotate(wallTileL24, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL25 = glm::translate(wallTileL25, glm::vec3(-1.0f, 0.5f, -4.5f));
+	wallTileL25 = glm::rotate(wallTileL25, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL25 = glm::rotate(wallTileL25, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL26 = glm::translate(wallTileL26, glm::vec3(0.0f, 0.5f, -4.5f));
+	wallTileL26 = glm::rotate(wallTileL26, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL26 = glm::rotate(wallTileL26, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	// END of North West Quadrant
+
+	// South West Quadrant
+	wallTileL27 = glm::translate(wallTileL27, glm::vec3(-1.0f, 0.5f, 0.5f));
+	wallTileL27 = glm::rotate(wallTileL27, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL27 = glm::rotate(wallTileL27, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL28 = glm::translate(wallTileL28, glm::vec3(-2.0f, 0.5f, 0.5f));
+	wallTileL28 = glm::rotate(wallTileL28, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL28 = glm::rotate(wallTileL28, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL29 = glm::translate(wallTileL29, glm::vec3(-2.5f, 0.5f, 1.0f));
+	wallTileL29 = glm::rotate(wallTileL29, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL30 = glm::translate(wallTileL30, glm::vec3(-2.5f, 0.5f, 2.0f));
+	wallTileL30 = glm::rotate(wallTileL30, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL31 = glm::translate(wallTileL31, glm::vec3(-2.5f, 0.5f, 3.0f));
+	wallTileL31 = glm::rotate(wallTileL31, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL32 = glm::translate(wallTileL32, glm::vec3(-3.0f, 0.5f, 3.5f));
+	wallTileL32 = glm::rotate(wallTileL32, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL32 = glm::rotate(wallTileL32, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL33 = glm::translate(wallTileL33, glm::vec3(-3.5f, 0.5f, 3.0f));
+	wallTileL33 = glm::rotate(wallTileL33, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL34 = glm::translate(wallTileL34, glm::vec3(-3.5f, 0.5f, 2.0f));
+	wallTileL34 = glm::rotate(wallTileL34, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL35 = glm::translate(wallTileL35, glm::vec3(-3.5f, 0.5f, 1.0f));
+	wallTileL35 = glm::rotate(wallTileL35, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL36 = glm::translate(wallTileL36, glm::vec3(-4.0f, 0.5f, 0.5f));
+	wallTileL36 = glm::rotate(wallTileL36, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL36 = glm::rotate(wallTileL36, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL37 = glm::translate(wallTileL37, glm::vec3(-4.5f, 0.5f, 1.0f));
+	wallTileL37 = glm::rotate(wallTileL37, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL38 = glm::translate(wallTileL38, glm::vec3(-4.5f, 0.5f, 2.0f));
+	wallTileL38 = glm::rotate(wallTileL38, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL39 = glm::translate(wallTileL39, glm::vec3(-4.5f, 0.5f, 3.0f));
+	wallTileL39 = glm::rotate(wallTileL39, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL40 = glm::translate(wallTileL40, glm::vec3(-4.5f, 0.5f, 4.0f));
+	wallTileL40 = glm::rotate(wallTileL40, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL41 = glm::translate(wallTileL41, glm::vec3(-4.0f, 0.5f, 4.5f));
+	wallTileL41 = glm::rotate(wallTileL41, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL41 = glm::rotate(wallTileL41, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL42 = glm::translate(wallTileL42, glm::vec3(-3.0f, 0.5f, 4.5f));
+	wallTileL42 = glm::rotate(wallTileL42, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL42 = glm::rotate(wallTileL42, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL43 = glm::translate(wallTileL43, glm::vec3(-2.0f, 0.5f, 4.5f));
+	wallTileL43 = glm::rotate(wallTileL43, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL43 = glm::rotate(wallTileL43, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	wallTileL44 = glm::translate(wallTileL44, glm::vec3(-1.5f, 0.5f, 4.0f));
+	wallTileL44 = glm::rotate(wallTileL44, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL45 = glm::translate(wallTileL45, glm::vec3(-1.5f, 0.5f, 3.0f));
+	wallTileL45 = glm::rotate(wallTileL45, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL46 = glm::translate(wallTileL46, glm::vec3(-1.5f, 0.5f, 2.0f));
+	wallTileL46 = glm::rotate(wallTileL46, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	wallTileL47 = glm::translate(wallTileL47, glm::vec3(-1.0f, 0.5f, 1.5f));
+	wallTileL47 = glm::rotate(wallTileL47, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL47 = glm::rotate(wallTileL47, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
 	wallTileR01 = glm::translate(wallTileR01, glm::vec3(0.5f, 0.5f, 0.0f));
 	wallTileR01 = glm::rotate(wallTileR01, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR02 = glm::translate(wallTileR02, glm::vec3(0.5f, 0.5f, -1.0f));
@@ -505,6 +653,17 @@ int main()
 	wallTileR05 = glm::translate(wallTileR05, glm::vec3(0.5f, 0.5f, -4.0f));
 	wallTileR05 = glm::rotate(wallTileR05, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
+	wallTileR06 = glm::translate(wallTileR06, glm::vec3(0.5f, 0.5f, 2.0f));
+	wallTileR06 = glm::rotate(wallTileR06, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileR07 = glm::translate(wallTileR07, glm::vec3(0.5f, 0.5f, 3.0f));
+	wallTileR07 = glm::rotate(wallTileR07, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileR08 = glm::translate(wallTileR08, glm::vec3(0.5f, 0.5f, 4.0f));
+	wallTileR08 = glm::rotate(wallTileR08, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileR09 = glm::translate(wallTileR09, glm::vec3(0.5f, 0.5f, 5.0f));
+	wallTileR09 = glm::rotate(wallTileR09, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileR10 = glm::translate(wallTileR10, glm::vec3(0.0f, 0.5f, 4.5f));
+	wallTileR10 = glm::rotate(wallTileR10, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileR10 = glm::rotate(wallTileR10, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 
 	glm::vec3 cameraPosition = glm::vec3(0.0f, 0.5f, 0.0f);
@@ -606,6 +765,91 @@ int main()
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL05));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL06));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL07));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL08));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL09));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL10));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL11));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL12));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL13));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL14));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL15));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL16));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL17));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL18));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL19));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL20));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL21));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL22));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL23));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL24));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL25));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL26));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL27));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL28));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL29));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL30));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL31));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL32));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL33));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL34));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL35));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL36));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL37));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL38));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL39));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL40));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL41));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL42));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL43));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL44));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL45));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL46));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL47));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		
 
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR01));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -616,6 +860,16 @@ int main()
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR04));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR05));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR06));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR07));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR08));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR09));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR10));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
 
@@ -672,6 +926,91 @@ int main()
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL05));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL06));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL07));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL08));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL09));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL10));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL11));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL12));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL13));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL14));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL15));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL16));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL17));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL18));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL19));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL20));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL21));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL22));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL23));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL24));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL25));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL26));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL27));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL28));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL29));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL30));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL31));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL32));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL33));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL34));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL35));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL36));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL37));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL38));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL39));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL40));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL41));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL42));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL43));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL44));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL45));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL46));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL47));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		
 
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR01));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -682,6 +1021,16 @@ int main()
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR04));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR05));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR06));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR07));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR08));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR09));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR10));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		
