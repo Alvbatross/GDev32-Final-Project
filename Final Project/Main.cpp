@@ -931,7 +931,7 @@ int main()
 	wall19.setXWall();
 	hitboxArray.push_back(wall19);
 
-	wallTileL47 = glm::translate(wallTileL47, glm::vec3(-1.0f, 0.5f, 1.5f));
+	wallTileL47 = glm::translate(wallTileL47, glm::vec3(-1.0f, 0.5f, 1.5f)); 
 	wallTileL47 = glm::rotate(wallTileL47, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL47 = glm::rotate(wallTileL47, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
