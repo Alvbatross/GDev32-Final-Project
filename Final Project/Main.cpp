@@ -105,6 +105,8 @@ glm::mat4 camera;
 glm::mat4 perspective;
 
 ISoundEngine* SoundEngine = createIrrKlangDevice();
+ISoundEngine* sfxEngine = createIrrKlangDevice();
+ISound* sfx;
 
 /**
  * @brief Main function
@@ -897,6 +899,9 @@ int main()
 	int rightInput = glfwGetKey(window, GLFW_KEY_D);
 
 	SoundEngine->play2D("Thesis Game.mp3", true);
+	SoundEngine->setSoundVolume(0.1f);
+	sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
+	sfxEngine->setSoundVolume(0.5f);
 
 	// Render loop
 	while (!glfwWindowShouldClose(window))
@@ -919,18 +924,34 @@ int main()
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
 			cameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
+			if (sfx->isFinished())
+			{
+				sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
+			}
 		}
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
 			cameraPosition -= camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
+			if (sfx->isFinished())
+			{
+				sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
+			}
 		}
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
 			cameraPosition -= camSpeed * right * deltaTime;
+			if (sfx->isFinished())
+			{
+				sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
+			}
 		}
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
 			cameraPosition += camSpeed * right * deltaTime;
+			if (sfx->isFinished())
+			{
+				sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
+			}
 		}
 
 		
