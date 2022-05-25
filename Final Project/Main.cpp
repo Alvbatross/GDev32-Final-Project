@@ -135,7 +135,7 @@ int main()
 	// Tell GLFW to create a window
 	int windowWidth = 800;
 	int windowHeight = 800;
-	GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, "Final Project - Horror game oh no", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, "Final Project - Horror game", nullptr, nullptr);
 	if (window == nullptr)
 	{
 		std::cerr << "Failed to create GLFW window!" << std::endl;
@@ -917,6 +917,8 @@ int main()
 		angleX += mouseSpeed * deltaTime * float(windowWidth / 2 - xpos);
 		angleY += mouseSpeed * deltaTime * float(windowHeight / 2 - ypos);
 
+		if (angleY * (180/M_PI) > 89) { angleY = 89 * (M_PI/180); }
+		if (angleY * (180/M_PI) < -89) { angleY = -89 * (M_PI / 180); }
 		glm::vec3 cameraTarget(cos(angleY) * sin(angleX), sin(angleY), cos(angleY) * cos(angleX));
 		glm::vec3 right(sin(angleX - M_PI / 2.0f), 0.0f, cos(angleX - M_PI / 2.0f));
 		glm::vec3 cameraUp = glm::cross(right, cameraTarget);
