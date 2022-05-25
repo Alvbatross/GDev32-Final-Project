@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -56,6 +57,8 @@ GLuint CreateShaderFromSource(const GLuint& shaderType, const std::string& shade
  */
 void FramebufferSizeChangedCallback(GLFWwindow* window, int width, int height);
 
+
+
 /**
  * Struct containing data about a vertex
  */
@@ -66,6 +69,38 @@ struct Vertex
 	GLfloat u, v;		// UV coordinates
 	GLfloat nx, ny, nz; // Normal Vertices
 };
+
+struct Hitbox
+{
+	glm::vec3 bottomL, bottomR, topL, topR;
+	bool xWall = false;
+	bool zWall = false;
+
+	void setXWall()
+	{
+		xWall = true;
+		zWall = false;
+	}
+	void setZWall()
+	{
+		zWall = true;
+		xWall = false;
+	}
+
+	bool isXWall()
+	{
+		return xWall;
+	}
+
+	bool isZWall()
+	{
+		return zWall;
+	}
+};
+
+bool checkCollision(glm::vec3 cameraPosition, std::vector<Hitbox> hitboxes);
+
+Hitbox collidedWall;
 
 glm::mat4 floorTile01 = glm::mat4(1.0f);
 
@@ -504,6 +539,8 @@ int main()
 
 	glEnable(GL_DEPTH_TEST);
 
+	std::vector<Hitbox> hitboxArray;
+
 	floorTile01 = glm::scale(floorTile01, glm::vec3(9.0f, 1.0f, 9.0f));
 
 	wallTileL01 = glm::translate(wallTileL01, glm::vec3(-0.5f, 0.5f, 0.0f));
@@ -514,9 +551,29 @@ int main()
 	wallTileL03 = glm::rotate(wallTileL03, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL04 = glm::translate(wallTileL04, glm::vec3(-0.5f, 0.5f, -3.0f));
 	wallTileL04 = glm::rotate(wallTileL04, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall01;
+	wall01.bottomL = glm::vec3(-0.5f, 0.0f, 0.5f);
+	wall01.bottomR = glm::vec3(-0.5f, 0.0f, -3.5f);
+	wall01.topL = glm::vec3(-0.5f, 1.0f, 0.5f);
+	wall01.topR = glm::vec3(-0.5, 1.0f, -3.5f);
+	wall01.setXWall();
+	hitboxArray.push_back(wall01);
+
 	wallTileL05 = glm::translate(wallTileL05, glm::vec3(-1.0f, 0.5f, -3.5f));
 	wallTileL05 = glm::rotate(wallTileL05, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL05 = glm::rotate(wallTileL05, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	wallTileL10 = glm::translate(wallTileL10, glm::vec3(-2.0f, 0.5f, -3.5f));
+	wallTileL10 = glm::rotate(wallTileL10, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL10 = glm::rotate(wallTileL10, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	Hitbox wall02;
+	wall02.bottomL = glm::vec3(-0.5f, 0.0f, -3.5f);
+	wall02.bottomR = glm::vec3(-2.5f, 0.0f, -3.5f);
+	wall02.topL = glm::vec3(-0.5f, 1.0f, -3.5f);
+	wall02.topR = glm::vec3(-2.5f, 1.0f, -3.5f);
+	wall02.setZWall();
+	hitboxArray.push_back(wall02);
 
 	wallTileL06 = glm::translate(wallTileL06, glm::vec3(-0.5f, 0.5f, 2.0f));
 	wallTileL06 = glm::rotate(wallTileL06, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -527,137 +584,263 @@ int main()
 	wallTileL09 = glm::translate(wallTileL09, glm::vec3(-0.5f, 0.5f, 5.0f));
 	wallTileL09 = glm::rotate(wallTileL09, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
+	Hitbox wall03;
+	wall03.bottomL = glm::vec3(-0.5f, 0.0f, 5.5f);
+	wall03.bottomR = glm::vec3(-0.5f, 0.0f, 1.5f);
+	wall03.topL = glm::vec3(-0.5f, 1.0f, 5.5f);
+	wall03.topR = glm::vec3(-0.5f, 1.0f, 1.5f);
+	wall03.setXWall();
+	hitboxArray.push_back(wall03);
 
     // North West Quadrant
-	wallTileL10 = glm::translate(wallTileL10, glm::vec3(-2.0f, 0.5f, -3.5f));
-	wallTileL10 = glm::rotate(wallTileL10, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	wallTileL10 = glm::rotate(wallTileL10, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	
 	wallTileL11 = glm::translate(wallTileL11, glm::vec3(-2.5f, 0.5f, -3.0f));
 	wallTileL11 = glm::rotate(wallTileL11, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL12 = glm::translate(wallTileL12, glm::vec3(-2.5f, 0.5f, -2.0f));
 	wallTileL12 = glm::rotate(wallTileL12, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall04;
+	wall04.bottomL = glm::vec3(-2.5f, 0.0f, -1.5f);
+	wall04.bottomR = glm::vec3(-2.5f, 0.0f, -3.5f);
+	wall04.topL = glm::vec3(-2.5f, 1.0f, -1.5f);
+	wall04.topR = glm::vec3(-2.5f, 1.0f, -3.5f);
+	wall04.setXWall();
+	hitboxArray.push_back(wall04);
+
 	wallTileL13 = glm::translate(wallTileL13, glm::vec3(-2.0f, 0.5f, -1.5f));
 	wallTileL13 = glm::rotate(wallTileL13, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL13 = glm::rotate(wallTileL13, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-	wallTileL14 = glm::translate(wallTileL14, glm::vec3(-2.0f, 0.5f, -0.5f));
-	wallTileL14 = glm::rotate(wallTileL14, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	wallTileL14 = glm::rotate(wallTileL14, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	Hitbox wall05;
+	wall05.bottomL = glm::vec3(-1.5f, 0.0f, -1.5f);
+	wall05.bottomR = glm::vec3(-2.5f, 0.0f, -1.5f);
+	wall05.topL = glm::vec3(-1.5f, 1.0f, -1.5f);
+	wall05.topR = glm::vec3(-2.5f, 1.0f, -1.5f);
+	wall05.setZWall();
+	hitboxArray.push_back(wall05);
+	
 	wallTileL15 = glm::translate(wallTileL15, glm::vec3(-1.5f, 0.5f, -1.0f));
 	wallTileL15 = glm::rotate(wallTileL15, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
+	Hitbox wall06;
+	wall06.bottomL = glm::vec3(-1.5f, 0.0f, -0.5f);
+	wall06.bottomR = glm::vec3(-1.5f, 0.0f, -1.5f);
+	wall06.topL = glm::vec3(-1.5f, 1.0f, -0.5f);
+	wall06.topR = glm::vec3(-1.5f, 1.0f, -1.5f);
+	wall06.setXWall();
+	hitboxArray.push_back(wall06);
+
+	wallTileL14 = glm::translate(wallTileL14, glm::vec3(-2.0f, 0.5f, -0.5f));
+	wallTileL14 = glm::rotate(wallTileL14, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	wallTileL14 = glm::rotate(wallTileL14, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	wallTileL16 = glm::translate(wallTileL16, glm::vec3(-3.0f, 0.5f, -0.5f));
 	wallTileL16 = glm::rotate(wallTileL16, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL16 = glm::rotate(wallTileL16, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileL17 = glm::translate(wallTileL17, glm::vec3(-4.0f, 0.5f, -0.5f));
 	wallTileL17 = glm::rotate(wallTileL17, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL17 = glm::rotate(wallTileL17, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	Hitbox wall07;
+	wall07.bottomL = glm::vec3(-1.5f, 0.0f, -0.5f);
+	wall07.bottomR = glm::vec3(-4.5f, 0.0f, -0.5f);
+	wall07.topL = glm::vec3(-1.5f, 1.0f, -0.5f);
+	wall07.topR = glm::vec3(-4.5f, 1.0f, -0.5f);
+	wall07.setZWall();
+	hitboxArray.push_back(wall07);
+
 	wallTileL18 = glm::translate(wallTileL18, glm::vec3(-4.5f, 0.5f, -1.0f));
 	wallTileL18 = glm::rotate(wallTileL18, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall08;
+	wall08.bottomL = glm::vec3(-4.5f, 0.0f, -0.5f);
+	wall08.bottomR = glm::vec3(-4.5f, 0.0f, -1.5f);
+	wall08.topL = glm::vec3(-4.5f, 1.0f, -0.5f);
+	wall08.topR = glm::vec3(-4.5f, 1.0f, -1.5f);
+	wall08.setXWall();
+	hitboxArray.push_back(wall08);
 
 	wallTileL19 = glm::translate(wallTileL19, glm::vec3(-4.0f, 0.5f, -1.5f));
 	wallTileL19 = glm::rotate(wallTileL19, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL19 = glm::rotate(wallTileL19, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	Hitbox wall09;
+	wall09.bottomL = glm::vec3(-3.5f, 0.0f, -1.5f);
+	wall09.bottomR = glm::vec3(-4.5f, 0.0f, -1.5f);
+	wall09.topL = glm::vec3(-3.5f, 1.0f, -1.5f);
+	wall09.topR = glm::vec3(-4.5f, 1.0f, -1.5f);
+	wall09.setZWall();
+	hitboxArray.push_back(wall09);
+
 	wallTileL20 = glm::translate(wallTileL20, glm::vec3(-3.5f, 0.5f, -2.0f));
 	wallTileL20 = glm::rotate(wallTileL20, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileL21 = glm::translate(wallTileL21, glm::vec3(-3.5f, 0.5f, -3.0f));
 	wallTileL21 = glm::rotate(wallTileL21, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileL22 = glm::translate(wallTileL22, glm::vec3(-3.5f, 0.5f, -4.0f));
 	wallTileL22 = glm::rotate(wallTileL22, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall10;
+	wall10.bottomL = glm::vec3(-3.5f, 0.0f, -1.5f);
+	wall10.bottomR = glm::vec3(-3.5f, 0.0f, -4.5f);
+	wall10.topL = glm::vec3(-3.5f, 1.0f, -1.5f);
+	wall10.topR = glm::vec3(-3.5f, 1.0f, -4.5f);
+	wall10.setXWall();
+	hitboxArray.push_back(wall10);
 
 	wallTileL23 = glm::translate(wallTileL23, glm::vec3(-3.0f, 0.5f, -4.5f));
 	wallTileL23 = glm::rotate(wallTileL23, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL23 = glm::rotate(wallTileL23, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileL24 = glm::translate(wallTileL24, glm::vec3(-2.0f, 0.5f, -4.5f));
 	wallTileL24 = glm::rotate(wallTileL24, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL24 = glm::rotate(wallTileL24, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileL25 = glm::translate(wallTileL25, glm::vec3(-1.0f, 0.5f, -4.5f));
 	wallTileL25 = glm::rotate(wallTileL25, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL25 = glm::rotate(wallTileL25, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileL26 = glm::translate(wallTileL26, glm::vec3(0.0f, 0.5f, -4.5f));
 	wallTileL26 = glm::rotate(wallTileL26, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL26 = glm::rotate(wallTileL26, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	Hitbox wall11;
+	wall11.bottomL = glm::vec3(0.5f, 0.0f, -4.5f);
+	wall11.bottomR = glm::vec3(-3.5f, 0.0f, -4.5f);
+	wall11.topL = glm::vec3(0.5f, 1.0f, -4.5f);
+	wall11.topR = glm::vec3(-3.5f, 1.0f, -4.5f);
+	wall11.setZWall();
+	hitboxArray.push_back(wall11);
 	// END of North West Quadrant
 
 	// South West Quadrant
 	wallTileL27 = glm::translate(wallTileL27, glm::vec3(-1.0f, 0.5f, 0.5f));
 	wallTileL27 = glm::rotate(wallTileL27, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL27 = glm::rotate(wallTileL27, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileL28 = glm::translate(wallTileL28, glm::vec3(-2.0f, 0.5f, 0.5f));
 	wallTileL28 = glm::rotate(wallTileL28, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL28 = glm::rotate(wallTileL28, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	Hitbox wall12;
+	wall12.bottomL = glm::vec3(-0.5f, 0.0f, 0.5f);
+	wall12.bottomR = glm::vec3(-2.5f, 0.0f, 0.5f);
+	wall12.topL = glm::vec3(-0.5f, 1.0f, 0.5f);
+	wall12.topR = glm::vec3(-2.5f, 1.0f, 0.5f);
+	wall12.setZWall();
+	hitboxArray.push_back(wall12);
+
 	wallTileL29 = glm::translate(wallTileL29, glm::vec3(-2.5f, 0.5f, 1.0f));
 	wallTileL29 = glm::rotate(wallTileL29, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileL30 = glm::translate(wallTileL30, glm::vec3(-2.5f, 0.5f, 2.0f));
 	wallTileL30 = glm::rotate(wallTileL30, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileL31 = glm::translate(wallTileL31, glm::vec3(-2.5f, 0.5f, 3.0f));
 	wallTileL31 = glm::rotate(wallTileL31, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall13;
+	wall13.bottomL = glm::vec3(-2.5f, 0.0f, 3.5f);
+	wall13.bottomR = glm::vec3(-2.5f, 0.0f, 0.5f);
+	wall13.topL = glm::vec3(-2.5f, 1.0f, 3.5f);
+	wall13.topR = glm::vec3(-2.5f, 1.0f, 0.5f);
+	wall13.setXWall();
+	hitboxArray.push_back(wall13);
 
 	wallTileL32 = glm::translate(wallTileL32, glm::vec3(-3.0f, 0.5f, 3.5f));
 	wallTileL32 = glm::rotate(wallTileL32, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL32 = glm::rotate(wallTileL32, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	Hitbox wall14;
+	wall14.bottomL = glm::vec3(-2.5f, 0.0f, 3.5f);
+	wall14.bottomR = glm::vec3(-3.5f, 0.0f, 3.5f);
+	wall14.topL = glm::vec3(-2.5f, 1.0f, 3.5f);
+	wall14.topR = glm::vec3(-3.5f, 1.0f, 3.5f);
+	wall14.setZWall();
+	hitboxArray.push_back(wall14);
+
 	wallTileL33 = glm::translate(wallTileL33, glm::vec3(-3.5f, 0.5f, 3.0f));
 	wallTileL33 = glm::rotate(wallTileL33, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileL34 = glm::translate(wallTileL34, glm::vec3(-3.5f, 0.5f, 2.0f));
 	wallTileL34 = glm::rotate(wallTileL34, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileL35 = glm::translate(wallTileL35, glm::vec3(-3.5f, 0.5f, 1.0f));
 	wallTileL35 = glm::rotate(wallTileL35, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall15;
+	wall15.bottomL = glm::vec3(-3.5f, 0.0f, 3.5f);
+	wall15.bottomR = glm::vec3(-3.5f, 0.0f, 0.5f);
+	wall15.topL = glm::vec3(-3.5f, 1.0f, 3.5f);
+	wall15.topR = glm::vec3(-3.5f, 1.0f, 0.5f);
+	wall15.setXWall();
+	hitboxArray.push_back(wall15);
 
 	wallTileL36 = glm::translate(wallTileL36, glm::vec3(-4.0f, 0.5f, 0.5f));
 	wallTileL36 = glm::rotate(wallTileL36, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL36 = glm::rotate(wallTileL36, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	Hitbox wall16;
+	wall16.bottomL = glm::vec3(-3.5, 0.0f, 0.5f);
+	wall16.bottomR = glm::vec3(-4.5, 0.0f, 0.5f);
+	wall16.topL = glm::vec3(-3.5, 1.0f, 0.5f);
+	wall16.topR = glm::vec3(-4.5, 1.0f, 0.5f);
+	wall16.setZWall();
+	hitboxArray.push_back(wall16);
+
 	wallTileL37 = glm::translate(wallTileL37, glm::vec3(-4.5f, 0.5f, 1.0f));
 	wallTileL37 = glm::rotate(wallTileL37, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileL38 = glm::translate(wallTileL38, glm::vec3(-4.5f, 0.5f, 2.0f));
 	wallTileL38 = glm::rotate(wallTileL38, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileL39 = glm::translate(wallTileL39, glm::vec3(-4.5f, 0.5f, 3.0f));
 	wallTileL39 = glm::rotate(wallTileL39, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileL40 = glm::translate(wallTileL40, glm::vec3(-4.5f, 0.5f, 4.0f));
 	wallTileL40 = glm::rotate(wallTileL40, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall17;
+	wall17.bottomL = glm::vec3(-4.5f, 0.0f, 4.5f);
+	wall17.bottomR = glm::vec3(-4.5f, 0.0f, 0.5f);
+	wall17.topL = glm::vec3(-4.5f, 1.0f, 4.5f);
+	wall17.topR = glm::vec3(-4.5f, 1.0f, 0.5f);
+	wall17.setXWall();
+	hitboxArray.push_back(wall17);
 
 	wallTileL41 = glm::translate(wallTileL41, glm::vec3(-4.0f, 0.5f, 4.5f));
 	wallTileL41 = glm::rotate(wallTileL41, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL41 = glm::rotate(wallTileL41, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileL42 = glm::translate(wallTileL42, glm::vec3(-3.0f, 0.5f, 4.5f));
 	wallTileL42 = glm::rotate(wallTileL42, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL42 = glm::rotate(wallTileL42, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileL43 = glm::translate(wallTileL43, glm::vec3(-2.0f, 0.5f, 4.5f));
 	wallTileL43 = glm::rotate(wallTileL43, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL43 = glm::rotate(wallTileL43, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	Hitbox wall18;
+	wall18.bottomL = glm::vec3(-1.5f, 0.0f, 4.5f);
+	wall18.bottomR = glm::vec3(-4.5f, 0.0f, 4.5f);
+	wall18.topL = glm::vec3(-1.5f, 1.0f, 4.5f);
+	wall18.topR = glm::vec3(-4.5f, 1.0f, 4.5f);
+	wall18.setZWall();
+	hitboxArray.push_back(wall18);
+
 	wallTileL44 = glm::translate(wallTileL44, glm::vec3(-1.5f, 0.5f, 4.0f));
 	wallTileL44 = glm::rotate(wallTileL44, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileL45 = glm::translate(wallTileL45, glm::vec3(-1.5f, 0.5f, 3.0f));
 	wallTileL45 = glm::rotate(wallTileL45, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileL46 = glm::translate(wallTileL46, glm::vec3(-1.5f, 0.5f, 2.0f));
 	wallTileL46 = glm::rotate(wallTileL46, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall19;
+	wall19.bottomL = glm::vec3(-1.5f, 0.0f, 4.5f);
+	wall19.bottomR = glm::vec3(-1.5f, 0.0f, 1.5f);
+	wall19.topL = glm::vec3(-1.5f, 1.0f, 4.5f);
+	wall19.topR = glm::vec3(-1.5f, 1.0f, 1.5f);
+	wall19.setXWall();
+	hitboxArray.push_back(wall19);
 
 	wallTileL47 = glm::translate(wallTileL47, glm::vec3(-1.0f, 0.5f, 1.5f));
 	wallTileL47 = glm::rotate(wallTileL47, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileL47 = glm::rotate(wallTileL47, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	Hitbox wall20;
+	wall20.bottomL = glm::vec3(-0.5f, 0.0f, 1.5f);
+	wall20.bottomR = glm::vec3(-1.5f, 0.0f, 1.5f);
+	wall20.topL = glm::vec3(-0.5f, 1.0f, 1.5f);
+	wall20.topR = glm::vec3(-1.5f, 1.0f, 1.5f);
+	wall20.setZWall();
+	hitboxArray.push_back(wall20);
+
+
     // End of South west quadrant and left side
 
 	// Right side
@@ -777,6 +960,10 @@ int main()
 	wallTileR37 = glm::rotate(wallTileR37, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR37 = glm::rotate(wallTileR37, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	std::vector<glm::mat4> wallArray;
+
+	
+
 	glm::vec3 cameraPosition = glm::vec3(0.0f, 0.5f, 0.0f);
 	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.5f, -3.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -796,7 +983,7 @@ int main()
 	int rightInput = glfwGetKey(window, GLFW_KEY_D);
 
 	SoundEngine->play2D("Thesis Game.mp3", true);
-	SoundEngine->setSoundVolume(0.1f);
+	SoundEngine->setSoundVolume(0.05f);
 	sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
 	sfxEngine->setSoundVolume(0.5f);
 
@@ -817,18 +1004,54 @@ int main()
 		glm::vec3 right(sin(angleX - M_PI / 2.0f), 0.0f, cos(angleX - M_PI / 2.0f));
 		glm::vec3 cameraUp = glm::cross(right, cameraTarget);
 
+		glm::vec3 upcomingCameraPosition = cameraPosition;
+
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
-			cameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
+			upcomingCameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));;
+
+			if (checkCollision(upcomingCameraPosition, hitboxArray) == false)
+			{
+				cameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
+			}
+			else
+			{
+				if (collidedWall.isXWall())
+				{
+					cameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(0.0f, 0.0f, cameraTarget.z));
+				}
+				else if (collidedWall.isZWall())
+				{
+					cameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, 0.0f));
+				}
+			}
+
 			if (sfx->isFinished())
 			{
 				sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
 			}
+			
 		}
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
-			cameraPosition -= camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
+			upcomingCameraPosition -= camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
+
+			if (checkCollision(upcomingCameraPosition, hitboxArray) == false)
+			{
+				cameraPosition -= camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
+			}
+			else
+			{
+				if (collidedWall.isXWall())
+				{
+					cameraPosition -= camSpeed * deltaTime * glm::normalize(glm::vec3(0.0f, 0.0f, cameraTarget.z));
+				}
+				else if (collidedWall.isZWall())
+				{
+					cameraPosition -= camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, 0.0f));
+				}
+			}
 			if (sfx->isFinished())
 			{
 				sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
@@ -836,7 +1059,23 @@ int main()
 		}
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
-			cameraPosition -= camSpeed * right * deltaTime;
+			upcomingCameraPosition -= camSpeed * right * deltaTime;
+
+			if (checkCollision(upcomingCameraPosition, hitboxArray) == false)
+			{
+				cameraPosition -= camSpeed * right * deltaTime;
+			}
+			else
+			{
+				if (collidedWall.isXWall())
+				{
+					cameraPosition -= camSpeed * deltaTime * glm::normalize(glm::vec3(0.0f, 0.0f, right.z));
+				}
+				else if (collidedWall.isZWall())
+				{
+					cameraPosition -= camSpeed * deltaTime * glm::normalize(glm::vec3(right.x, 0.0f, 0.0f));
+				}
+			}
 			if (sfx->isFinished())
 			{
 				sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
@@ -844,7 +1083,23 @@ int main()
 		}
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
-			cameraPosition += camSpeed * right * deltaTime;
+			upcomingCameraPosition += camSpeed * right * deltaTime;
+
+			if (checkCollision(upcomingCameraPosition, hitboxArray) == false)
+			{
+				cameraPosition += camSpeed * right * deltaTime;
+			}
+			else
+			{
+				if (collidedWall.isXWall())
+				{
+					cameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(0.0f, 0.0f, right.z));
+				}
+				else if (collidedWall.isZWall())
+				{
+					cameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(right.x, 0.0f, 0.0f));
+				}
+			}
 			if (sfx->isFinished())
 			{
 				sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
@@ -1465,4 +1720,38 @@ void FramebufferSizeChangedCallback(GLFWwindow* window, int width, int height)
 	// Whenever the size of the framebuffer changed (due to window resizing, etc.),
 	// update the dimensions of the region to the new size
 	glViewport(0, 0, width, height);
+}
+
+
+bool checkCollision(glm::vec3 cameraPosition, std::vector<Hitbox> hitboxes)
+{
+	bool collisionX = false;
+	bool collisionZ = false;
+
+	for (int i = 0; i < hitboxes.size(); i++)
+	{
+		float wallWidth = glm::distance(hitboxes[i].topL, hitboxes[i].topR);
+
+		std::cout << wallWidth << std::endl;
+		
+		if (hitboxes[i].isXWall())
+		{
+			collisionX = ((cameraPosition.x - 0.25f) + 0.5f >= hitboxes[i].topR.x) && ((float(hitboxes[i].topR.x)) >= (float(cameraPosition.x) - 0.25f));
+			collisionZ = ((cameraPosition.z - 0.25f) + 0.5f >= hitboxes[i].topR.z) && ((float(hitboxes[i].topR.z) + wallWidth) >= (cameraPosition.z - 0.25f));
+		}
+		else if (hitboxes[i].isZWall())
+		{
+			collisionX = ((cameraPosition.x - 0.25f) + 0.5f >= hitboxes[i].topR.x) && ((float(hitboxes[i].topR.x) + wallWidth) >= (cameraPosition.x - 0.25f));
+			collisionZ = ((cameraPosition.z - 0.25f) + 0.5f >= hitboxes[i].topR.z) && ((float(hitboxes[i].topR.z)) >= (float(cameraPosition.z) - 0.25f));
+		}
+
+		if (collisionX && collisionZ)
+		{
+			std::cout << "HIT" << std::endl;
+			collidedWall = hitboxes[i];
+			return true;
+		}
+	}
+
+	return false;
 }
