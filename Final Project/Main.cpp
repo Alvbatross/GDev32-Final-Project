@@ -957,111 +957,190 @@ int main()
 	wallTileR04 = glm::rotate(wallTileR04, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR05 = glm::translate(wallTileR05, glm::vec3(0.5f, 0.5f, -4.0f));
 	wallTileR05 = glm::rotate(wallTileR05, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR06 = glm::translate(wallTileR06, glm::vec3(0.5f, 0.5f, 1.0f));
 	wallTileR06 = glm::rotate(wallTileR06, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR07 = glm::translate(wallTileR07, glm::vec3(0.5f, 0.5f, 2.0f));
 	wallTileR07 = glm::rotate(wallTileR07, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall21;
+	wall21.bottomL = glm::vec3(0.5f, 0.0f, 2.5f);
+	wall21.bottomR = glm::vec3(0.5f, 0.0f, -4.5f);
+	wall21.topL = glm::vec3(0.5f, 1.0f, 2.5f);
+	wall21.topR = glm::vec3(0.5f, 1.0f, -4.5f);
+	wall21.setXWall();
+	hitboxArray.push_back(wall21);
+
 	wallTileR08 = glm::translate(wallTileR08, glm::vec3(0.5f, 0.5f, 4.0f));
 	wallTileR08 = glm::rotate(wallTileR08, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR09 = glm::translate(wallTileR09, glm::vec3(0.5f, 0.5f, 5.0f));
 	wallTileR09 = glm::rotate(wallTileR09, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall22;
+	wall22.bottomL = glm::vec3(0.5f, 0.0f, 5.5f);
+	wall22.bottomR = glm::vec3(0.5f, 0.0f, 3.5f);
+	wall22.topL = glm::vec3(0.5f, 1.0f, 5.5f);
+	wall22.topR = glm::vec3(0.5f, 1.0f, 3.5f);
+	wall22.setXWall();
+	hitboxArray.push_back(wall22);
+
 	wallTileR10 = glm::translate(wallTileR10, glm::vec3(0.0f, 0.5f, 4.5f));
 	wallTileR10 = glm::rotate(wallTileR10, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR10 = glm::rotate(wallTileR10, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	Hitbox wall23;
+	wall23.bottomL = glm::vec3(0.5f, 0.0f, 4.5f);
+	wall23.bottomR = glm::vec3(-0.5f, 0.0f, 4.5f);
+	wall23.topL = glm::vec3(0.5f, 1.0f, 4.5f);
+	wall23.topR = glm::vec3(-0.5f, 1.0f, 4.5f);
+	wall23.setZWall();
+	hitboxArray.push_back(wall23);
+
 	wallTileR11 = glm::translate(wallTileR11, glm::vec3(1.0f, 0.5f, 2.5f));
 	wallTileR11 = glm::rotate(wallTileR11, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR11 = glm::rotate(wallTileR11, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileR12 = glm::translate(wallTileR12, glm::vec3(2.0f, 0.5f, 2.5f));
 	wallTileR12 = glm::rotate(wallTileR12, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR12 = glm::rotate(wallTileR12, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileR13 = glm::translate(wallTileR13, glm::vec3(3.0f, 0.5f, 2.5f));
 	wallTileR13 = glm::rotate(wallTileR13, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR13 = glm::rotate(wallTileR13, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	Hitbox wall24;
+	wall24.bottomL = glm::vec3(3.5f, 0.0f, 2.5f);
+	wall24.bottomR = glm::vec3(0.5f, 0.0f, 2.5f);
+	wall24.topL = glm::vec3(3.5f, 1.0f, 2.5f);
+	wall24.topR = glm::vec3(0.5f, 1.0f, 2.5f);
+	wall24.setZWall();
+	hitboxArray.push_back(wall24);
+
 	wallTileR14 = glm::translate(wallTileR14, glm::vec3(3.5f, 0.5f, 2.0f));
 	wallTileR14 = glm::rotate(wallTileR14, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR15 = glm::translate(wallTileR15, glm::vec3(3.5f, 0.5f, 1.0f));
 	wallTileR15 = glm::rotate(wallTileR15, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR16 = glm::translate(wallTileR16, glm::vec3(3.5f, 0.5f, 0.0f));
 	wallTileR16 = glm::rotate(wallTileR16, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall25;
+	wall25.bottomL = glm::vec3(3.5f, 0.0f, 2.5f);
+	wall25.bottomR = glm::vec3(3.5f, 0.0f, -0.5f);
+	wall25.topL = glm::vec3(3.5f, 1.0f, 2.5f);
+	wall25.topR = glm::vec3(3.5f, 1.0f, -0.5f);
+	wall25.setXWall();
+	hitboxArray.push_back(wall25);
 
 	wallTileR17 = glm::translate(wallTileR17, glm::vec3(3.0f, 0.5f, -0.5f));
 	wallTileR17 = glm::rotate(wallTileR17, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR17 = glm::rotate(wallTileR17, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileR18 = glm::translate(wallTileR18, glm::vec3(2.0f, 0.5f, -0.5f));
 	wallTileR18 = glm::rotate(wallTileR18, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR18 = glm::rotate(wallTileR18, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	Hitbox wall26;
+	wall26.bottomL = glm::vec3(3.5f, 0.0f, -0.5f);
+	wall26.bottomR = glm::vec3(1.5f, 0.0f, -0.5f);
+	wall26.topL = glm::vec3(3.5f, 1.0f, -0.5f);
+	wall26.topR = glm::vec3(1.5f, 1.0f, -0.5f);
+	wall26.setZWall();
+	hitboxArray.push_back(wall26);
+
 	wallTileR19 = glm::translate(wallTileR19, glm::vec3(1.5f, 0.5f, -1.0f));
 	wallTileR19 = glm::rotate(wallTileR19, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR20 = glm::translate(wallTileR20, glm::vec3(1.5f, 0.5f, -2.0f));
 	wallTileR20 = glm::rotate(wallTileR20, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR21 = glm::translate(wallTileR21, glm::vec3(1.5f, 0.5f, -3.0f));
 	wallTileR21 = glm::rotate(wallTileR21, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR22 = glm::translate(wallTileR22, glm::vec3(1.5f, 0.5f, -4.0f));
 	wallTileR22 = glm::rotate(wallTileR22, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall27;
+	wall27.bottomL = glm::vec3(1.5f, 0.0f, -0.5f);
+	wall27.bottomR = glm::vec3(1.5f, 0.0f, -4.5f);
+	wall27.topL = glm::vec3(1.5f, 1.0f, -0.5f);
+	wall27.topR = glm::vec3(1.5f, 1.0f, -4.5f);
+	wall27.setXWall();
+	hitboxArray.push_back(wall27);
 
 	wallTileR23 = glm::translate(wallTileR23, glm::vec3(2.0f, 0.5f, -4.5f));
 	wallTileR23 = glm::rotate(wallTileR23, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR23 = glm::rotate(wallTileR23, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileR24 = glm::translate(wallTileR24, glm::vec3(3.0f, 0.5f, -4.5f));
 	wallTileR24 = glm::rotate(wallTileR24, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR24 = glm::rotate(wallTileR24, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	Hitbox wall28;
+	wall28.bottomL = glm::vec3(3.5f, 0.0f, -4.5f);
+	wall28.bottomR = glm::vec3(1.5f, 0.0f, -4.5f);
+	wall28.topL = glm::vec3(3.5f, 1.0f, -4.5f);
+	wall28.topR = glm::vec3(1.5f, 1.0f, -4.5f);
+	wall28.setZWall();
+	hitboxArray.push_back(wall28);
+
 	wallTileR25 = glm::translate(wallTileR25, glm::vec3(3.5f, 0.5f, -4.0f));
 	wallTileR25 = glm::rotate(wallTileR25, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR26 = glm::translate(wallTileR26, glm::vec3(3.5f, 0.5f, -3.0f));
 	wallTileR26 = glm::rotate(wallTileR26, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR27 = glm::translate(wallTileR27, glm::vec3(3.5f, 0.5f, -2.0f));
 	wallTileR27 = glm::rotate(wallTileR27, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall29;
+	wall29.bottomL = glm::vec3(3.5f, 0.0f, -1.5f);
+	wall29.bottomR = glm::vec3(3.5f, 0.0f, -4.5f);
+	wall29.topL = glm::vec3(3.5f, 1.0f, -1.5f);
+	wall29.topR = glm::vec3(3.5f, 1.0f, -4.5f);
+	wall29.setXWall();
+	hitboxArray.push_back(wall29);
 
 	wallTileR28 = glm::translate(wallTileR28, glm::vec3(4.0f, 0.5f, -1.5f));
 	wallTileR28 = glm::rotate(wallTileR28, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR28 = glm::rotate(wallTileR28, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+	Hitbox wall30;
+	wall30.bottomL = glm::vec3(4.5f, 0.0f, -1.5f);
+	wall30.bottomR = glm::vec3(3.5f, 0.0f, -1.5f);
+	wall30.topL = glm::vec3(4.5f, 1.0f, -1.5f);
+	wall30.topR = glm::vec3(3.5f, 1.0f, -1.5f);
+	wall30.setZWall();
+	hitboxArray.push_back(wall30);
+
 	wallTileR29 = glm::translate(wallTileR29, glm::vec3(4.5f, 0.5f, -1.0f));
 	wallTileR29 = glm::rotate(wallTileR29, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR30 = glm::translate(wallTileR30, glm::vec3(4.5f, 0.5f, -0.0f));
 	wallTileR30 = glm::rotate(wallTileR30, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR31 = glm::translate(wallTileR31, glm::vec3(4.5f, 0.5f, 1.0f));
 	wallTileR31 = glm::rotate(wallTileR31, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR32 = glm::translate(wallTileR32, glm::vec3(4.5f, 0.5f, 2.0f));
 	wallTileR32 = glm::rotate(wallTileR32, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 	wallTileR33 = glm::translate(wallTileR33, glm::vec3(4.5f, 0.5f, 3.0f));
 	wallTileR33 = glm::rotate(wallTileR33, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	Hitbox wall31;
+	wall31.bottomL = glm::vec3(4.5f, 0.0f, 3.5f);
+	wall31.bottomR = glm::vec3(4.5f, 0.0f, -1.5f);
+	wall31.topL = glm::vec3(4.5f, 1.0f, 3.5f);
+	wall31.topR = glm::vec3(4.5f, 1.0f, -1.5f);
+	wall31.setXWall();
+	hitboxArray.push_back(wall31);
 
 	wallTileR34 = glm::translate(wallTileR34, glm::vec3(4.0f, 0.5f, 3.5f));
 	wallTileR34 = glm::rotate(wallTileR34, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR34 = glm::rotate(wallTileR34, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileR35 = glm::translate(wallTileR35, glm::vec3(3.0f, 0.5f, 3.5f));
 	wallTileR35 = glm::rotate(wallTileR35, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR35 = glm::rotate(wallTileR35, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileR36 = glm::translate(wallTileR36, glm::vec3(2.0f, 0.5f, 3.5f));
 	wallTileR36 = glm::rotate(wallTileR36, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR36 = glm::rotate(wallTileR36, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	wallTileR37 = glm::translate(wallTileR37, glm::vec3(1.0f, 0.5f, 3.5f));
 	wallTileR37 = glm::rotate(wallTileR37, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	wallTileR37 = glm::rotate(wallTileR37, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	Hitbox wall32;
+	wall32.bottomL = glm::vec3(4.5f, 0.0f, 3.5f);
+	wall32.bottomR = glm::vec3(0.5f, 0.0f, 3.5f);
+	wall32.topL = glm::vec3(4.5f, 1.0f, 3.5f);
+	wall32.topR = glm::vec3(0.5f, 1.0f, 3.5f);
+	wall32.setZWall();
+	hitboxArray.push_back(wall32);
 
 	std::vector<glm::mat4> wallArray;
 
@@ -1088,7 +1167,7 @@ int main()
 	SoundEngine->play2D("Thesis Game.mp3", true);
 	SoundEngine->setSoundVolume(0.05f);
 	sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
-	sfxEngine->setSoundVolume(0.5f);
+	sfxEngine->setSoundVolume(0.25f);
 
 	// Render loop
 	while (!glfwWindowShouldClose(window))
