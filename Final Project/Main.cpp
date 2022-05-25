@@ -16,6 +16,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <irrklang/irrKlang.h>
+
+using namespace irrklang;
+
 // ---------------
 // Function declarations
 // ---------------
@@ -83,6 +87,8 @@ glm::mat4 wallTileL05 = glm::mat4(1.0f);
 
 glm::mat4 camera;
 glm::mat4 perspective;
+
+ISoundEngine* SoundEngine = createIrrKlangDevice();
 
 /**
  * @brief Main function
@@ -435,6 +441,8 @@ int main()
 	int backwardInput = glfwGetKey(window, GLFW_KEY_S);
 	int leftInput = glfwGetKey(window, GLFW_KEY_A);
 	int rightInput = glfwGetKey(window, GLFW_KEY_D);
+
+	SoundEngine->play2D("Thesis Game.mp3", true);
 
 	// Render loop
 	while (!glfwWindowShouldClose(window))
