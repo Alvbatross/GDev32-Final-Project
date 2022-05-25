@@ -912,6 +912,7 @@ int main()
 
 		glfwGetCursorPos(window, &xpos, &ypos);
 		glfwSetCursorPos(window, (double)windowWidth / 2, (double)windowHeight / 2);
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 		angleX += mouseSpeed * deltaTime * float(windowWidth / 2 - xpos);
 		angleY += mouseSpeed * deltaTime * float(windowHeight / 2 - ypos);
