@@ -7,6 +7,7 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <vector>
 #include <string>
 #include <vector>
 
@@ -169,7 +170,7 @@ int main()
 	// Tell GLFW to create a window
 	int windowWidth = 800;
 	int windowHeight = 800;
-	GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, "Final Project - Horror game oh no", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, "Final Project - Horror game", nullptr, nullptr);
 	if (window == nullptr)
 	{
 		std::cerr << "Failed to create GLFW window!" << std::endl;
@@ -305,7 +306,51 @@ int main()
 	floor[4] = { -0.5f, 0.f, -0.5f,	    255,  255,  255,    10.0f, 10.0f,    0.0f, 1.0f, 0.0f };	// Upper-left
 	floor[5] = { -0.5f, 0.f, 0.5f,		255,  255,  255,    0.0f, 10.0f,    0.0f, 1.0f, 0.0f };	// Lower-left
 
-	
+
+	Vertex skybox[36];
+	skybox[0] = { -1.0f,  1.0f, -1.0f };
+	skybox[1] = { -1.0f, -1.0f, -1.0f };
+	skybox[2] = { 1.0f, -1.0f, -1.0f };
+	skybox[3] = { 1.0f, -1.0f, -1.0f };
+	skybox[4] = { 1.0f,  1.0f, -1.0f };
+	skybox[5] = { -1.0f,  1.0f, -1.0f };
+
+	skybox[6] = { -1.0f, -1.0f,  1.0f };
+	skybox[7] = { -1.0f, -1.0f, -1.0f };
+	skybox[8] = { -1.0f,  1.0f, -1.0f };
+	skybox[9] = { -1.0f,  1.0f, -1.0f };
+	skybox[10] = { -1.0f,  1.0f,  1.0f };
+	skybox[11] = { -1.0f, -1.0f,  1.0f };
+
+	skybox[12] = { 1.0f, -1.0f, -1.0f };
+	skybox[13] = { 1.0f, -1.0f,  1.0f };
+	skybox[14] = { 1.0f,  1.0f,  1.0f };
+	skybox[15] = { 1.0f,  1.0f,  1.0f };
+	skybox[16] = { 1.0f,  1.0f, -1.0f };
+	skybox[17] = { 1.0f, -1.0f, -1.0f };
+
+	skybox[18] = { -1.0f, -1.0f,  1.0f };
+	skybox[19] = { -1.0f,  1.0f,  1.0f };
+	skybox[20] = { 1.0f,  1.0f,  1.0f };
+	skybox[21] = { 1.0f,  1.0f,  1.0f };
+	skybox[22] = { 1.0f, -1.0f,  1.0f };
+	skybox[23] = { -1.0f, -1.0f,  1.0f };
+
+	skybox[24] = { -1.0f,  1.0f, -1.0f };
+	skybox[25] = { 1.0f,  1.0f, -1.0f };
+	skybox[26] = { 1.0f,  1.0f,  1.0f };
+	skybox[27] = { 1.0f,  1.0f,  1.0f };
+	skybox[28] = { -1.0f,  1.0f,  1.0f };
+	skybox[29] = { -1.0f,  1.0f, -1.0f };
+
+	skybox[30] = { -1.0f, -1.0f, -1.0f };
+	skybox[31] = { -1.0f, -1.0f,  1.0f };
+	skybox[32] = { 1.0f, -1.0f, -1.0f };
+	skybox[33] = { 1.0f, -1.0f, -1.0f };
+	skybox[34] = { -1.0f, -1.0f,  1.0f };
+	skybox[35] = { 1.0f, -1.0f,  1.0f };
+
+
 	// Create a vertex buffer object (VBO), and upload our vertices data to the VBO
 	GLuint cubeVbo;
 	glGenBuffers(1, &cubeVbo);
@@ -325,7 +370,11 @@ int main()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(floor), floor, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
-	
+	GLuint skyboxVbo;
+	glGenBuffers(1, &skyboxVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skybox), skybox, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// Create a vertex array object that contains data on how to map vertex attributes
 	// (e.g., position, color) to vertex shader properties.
@@ -402,6 +451,16 @@ int main()
 
 	glBindVertexArray(0);
 
+	// Skybox
+	GLuint skyboxVao;
+	glGenVertexArrays(1, &skyboxVao);
+	glBindVertexArray(skyboxVao);
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVbo);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+	glBindVertexArray(0);
+
 	// FRAMEBUFFERS
 	//
 	//
@@ -432,6 +491,8 @@ int main()
 	GLuint program = CreateShaderProgram("main.vsh", "main.fsh");
 
 	GLuint depthshaders = CreateShaderProgram("depthShader.vsh", "depthShader.fsh");
+
+	GLuint skyboxshaders = CreateShaderProgram("skyboxShader.vsh", "skyboxShader.fsh");
 
 	// Tell OpenGL the dimensions of the region where stuff will be drawn.
 	// For now, tell OpenGL to use the whole screen
@@ -534,8 +595,50 @@ int main()
 		std::cerr << "Failed to load image" << std::endl;
 	}
 
+	
+	// Skybox textures code
+	std::vector<std::string> skyboxFaces{
+		"night2.jpg",
+		"night2.jpg",
+		"nightmoon.jpg",
+		"night2.jpg",
+		"night4.jpg",
+		"night4.jpg"
+	};
 
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
+	int width, height, nrChannels;
+	
+	for (unsigned int i = 0; i < skyboxFaces.size(); i++)
+	{
+		//
+		unsigned char* data = stbi_load(skyboxFaces[i].c_str(), &width, &height, &nrChannels, 0);
+		if (data)
+		{
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+				0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
+			);
+			stbi_image_free(data);
+		}
+		else
+		{
+			std::cout << "Cubemap tex failed to load at path: " << skyboxFaces[i] << std::endl;
+			stbi_image_free(data);
+		}
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	unsigned int skyboxTexture = textureID;
+
+	//
+	// Skybox code - end
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -996,10 +1099,13 @@ int main()
 
 		glfwGetCursorPos(window, &xpos, &ypos);
 		glfwSetCursorPos(window, (double)windowWidth / 2, (double)windowHeight / 2);
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 		angleX += mouseSpeed * deltaTime * float(windowWidth / 2 - xpos);
 		angleY += mouseSpeed * deltaTime * float(windowHeight / 2 - ypos);
 
+		if (angleY * (180/M_PI) > 89) { angleY = 89 * (M_PI/180); }
+		if (angleY * (180/M_PI) < -89) { angleY = -89 * (M_PI / 180); }
 		glm::vec3 cameraTarget(cos(angleY) * sin(angleX), sin(angleY), cos(angleY) * cos(angleX));
 		glm::vec3 right(sin(angleX - M_PI / 2.0f), 0.0f, cos(angleX - M_PI / 2.0f));
 		glm::vec3 cameraUp = glm::cross(right, cameraTarget);
@@ -1105,7 +1211,9 @@ int main()
 				sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
 			}
 		}
+
 		
+
 		// FIRST PASS
 		// 
 		// 
@@ -1325,6 +1433,25 @@ int main()
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, fboTex);
 		
+
+		// Draw Skybox
+		glDepthMask(GL_FALSE);
+		glUseProgram(skyboxshaders);
+
+		GLint skyboxProjectionUniformLocation = glGetUniformLocation(skyboxshaders, "projection");
+		GLint skyboxViewUniformLocation = glGetUniformLocation(skyboxshaders, "view");
+	
+		glUniformMatrix4fv(skyboxProjectionUniformLocation, 1, GL_FALSE, glm::value_ptr(perspective));
+		glUniformMatrix4fv(skyboxViewUniformLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4(glm::mat3(camera))));
+
+
+		glBindVertexArray(skyboxVao);
+		stbi_set_flip_vertically_on_load(true);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDepthMask(GL_TRUE);
+		glBindVertexArray(0);
 
 		// Use the shader program that we created
 		glUseProgram(program);
@@ -1607,11 +1734,14 @@ int main()
 	glDeleteBuffers(1, &cubeVbo);
 	glDeleteBuffers(1, &planeVbo);
 	glDeleteBuffers(1, &floorVbo);
+	glDeleteBuffers(1, &skyboxVbo);
 
 	// Delete the vertex array object
 	glDeleteVertexArrays(1, &cubeVao);
 	glDeleteVertexArrays(1, &planeVao);
 	glDeleteVertexArrays(1, &floorVao);
+	glDeleteVertexArrays(1, &skyboxVao);
+
 
 	// Remember to tell GLFW to clean itself up before exiting the application
 	glfwTerminate();
