@@ -244,6 +244,15 @@ int main()
 	plane[4] = { -0.5f, 0.f, -0.5f,	    255,  255,  255,    1.0f, 1.0f,    0.0f, 1.0f, 0.0f };	// Upper-left
 	plane[5] = { -0.5f, 0.f, 0.5f,		255,  255,  255,    0.0f, 1.0f,    0.0f, 1.0f, 0.0f };	// Lower-left
 
+	Vertex floor[6];
+	floor[0] = { -0.5f, 0.f, 0.5f,		255,  255,  255,    0.0f, 10.0f,    0.0f, 1.0f, 0.0f };	// Lower-left
+	floor[1] = { 0.5f, 0.f, 0.5f,		255,  255,  255,    0.0f, 0.0f,    0.0f, 1.0f, 0.0f };	// Lower-right
+	floor[2] = { 0.5f, 0.f, -0.5f,		255,  255,  255,    10.0f, 0.0f,    0.0f, 1.0f, 0.0f };	// Upper-right
+
+	floor[3] = { 0.5f, 0.f, -0.5f,		255,  255,  255,    10.0f, 0.0f,    0.0f, 1.0f, 0.0f };	// Upper-right
+	floor[4] = { -0.5f, 0.f, -0.5f,	    255,  255,  255,    10.0f, 10.0f,    0.0f, 1.0f, 0.0f };	// Upper-left
+	floor[5] = { -0.5f, 0.f, 0.5f,		255,  255,  255,    0.0f, 10.0f,    0.0f, 1.0f, 0.0f };	// Lower-left
+
 	
 	// Create a vertex buffer object (VBO), and upload our vertices data to the VBO
 	GLuint cubeVbo;
@@ -257,11 +266,19 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, planeVbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(plane), plane, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	GLuint floorVbo;
+	glGenBuffers(1, &floorVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, floorVbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(floor), floor, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	
 
 	// Create a vertex array object that contains data on how to map vertex attributes
 	// (e.g., position, color) to vertex shader properties.
+
+	// cube
 	GLuint cubeVao;
 	glGenVertexArrays(1, &cubeVao);
 	glBindVertexArray(cubeVao);
@@ -285,8 +302,7 @@ int main()
 	glBindVertexArray(0);
 
 
-	// Create a vertex array object that contains data on how to map vertex attributes
-	// (e.g., position, color) to vertex shader properties.
+	// plane
 	GLuint planeVao;
 	glGenVertexArrays(1, &planeVao);
 	glBindVertexArray(planeVao);
@@ -308,6 +324,30 @@ int main()
 	glEnableVertexAttribArray(3);
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, nx)));
 	
+	glBindVertexArray(0);
+
+	// floor
+	GLuint floorVao;
+	glGenVertexArrays(1, &floorVao);
+	glBindVertexArray(floorVao);
+	glBindBuffer(GL_ARRAY_BUFFER, floorVbo);
+
+	// Vertex attribute 0 - Position
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+
+	// Vertex attribute 1 - Color
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)(sizeof(GLfloat) * 3));
+
+	// Vertex attribute 2 - UV coordinate
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, u)));
+
+	// Vertex attribute 3 - Normal coordinates
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, nx)));
+
 	glBindVertexArray(0);
 
 	// FRAMEBUFFERS
@@ -394,6 +434,55 @@ int main()
 	{
 		std::cerr << "Failed to load image" << std::endl;
 	}
+
+	// Create a variable that will contain the ID for our texture,
+	// and use glGenTextures() to generate the texture itself
+	GLuint floorTex;
+	glGenTextures(1, &floorTex);
+
+	// --- Load our image using stb_image ---
+
+	// Im image-space (pixels), (0, 0) is the upper-left corner of the image
+	// However, in u-v coordinates, (0, 0) is the lower-left corner of the image
+	// This means that the image will appear upside-down when we use the image data as is
+	// This function tells stbi to flip the image vertically so that it is not upside-down when we use it
+	stbi_set_flip_vertically_on_load(true);
+
+
+	// Read the image data and store it in an unsigned char array
+	imageData = stbi_load("BrownTileTex.jpg", &imageWidth, &imageHeight, &numChannels, 0);
+
+	// Make sure that we actually loaded the image before uploading the data to the GPU
+	if (imageData != nullptr)
+	{
+		// Our texture is 2D, so we bind our texture to the GL_TEXTURE_2D target
+		glBindTexture(GL_TEXTURE_2D, floorTex);
+
+		// Set the filtering methods for magnification and minification
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+		// Set the wrapping method for the s-axis (x-axis) and t-axis (y-axis)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// Upload the image data to GPU memory
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+
+		// If we set minification to use mipmaps, we can tell OpenGL to generate the mipmaps for us
+		//glGenerateMipmap(GL_TEXTURE_2D);
+
+		// Once we have copied the data over to the GPU, we can delete
+		// the data on the CPU side, since we won't be using it anymore
+		stbi_image_free(imageData);
+		imageData = nullptr;
+	}
+	else
+	{
+		std::cerr << "Failed to load image" << std::endl;
+	}
+
+
 
 
 	glEnable(GL_DEPTH_TEST);
@@ -503,20 +592,18 @@ int main()
 		// PLANE
 		//
 		//
+		glBindVertexArray(floorVao);
+
+		GLint floorUniformLocation = glGetUniformLocation(depthshaders, "modelMatrix");
+		glUniformMatrix4fv(floorUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile01));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+	
+		glBindVertexArray(0);
+
+
 		glBindVertexArray(planeVao);
 
 		GLint planeUniformLocation = glGetUniformLocation(depthshaders, "modelMatrix");
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile01));
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile02));
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile03));
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile04));
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile05));
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL01));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileL02));
@@ -559,18 +646,26 @@ int main()
 		
 		
 
-		// PLANE 
+		// FLOOR
 		//
-		glBindVertexArray(planeVao);
-
-		planeUniformLocation = glGetUniformLocation(program, "modelMatrix");
-		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile01));
+		glBindVertexArray(floorVao);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, floorTex);
+		floorUniformLocation = glGetUniformLocation(program, "modelMatrix");
+		glUniformMatrix4fv(floorUniformLocation, 1, GL_FALSE, glm::value_ptr(floorTile01));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		// Bind our texture to texture unit 1
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, wallTex);
 
+		glBindVertexArray(0);
+
+
+		// PLANE
+		glBindVertexArray(planeVao);
+		planeUniformLocation = glGetUniformLocation(program, "modelMatrix");
+		
 		// Make our sampler in the fragment shader use texture unit 0
 		GLint texUniformLocation = glGetUniformLocation(program, "tex");
 		glUniform1i(texUniformLocation, 1);
@@ -597,6 +692,7 @@ int main()
 		glUniformMatrix4fv(planeUniformLocation, 1, GL_FALSE, glm::value_ptr(wallTileR05));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
+		
 		glBindVertexArray(0);
 
 
@@ -673,10 +769,12 @@ int main()
 	// Delete the VBO that contains our vertices
 	glDeleteBuffers(1, &cubeVbo);
 	glDeleteBuffers(1, &planeVbo);
+	glDeleteBuffers(1, &floorVbo);
 
 	// Delete the vertex array object
 	glDeleteVertexArrays(1, &cubeVao);
 	glDeleteVertexArrays(1, &planeVao);
+	glDeleteVertexArrays(1, &floorVao);
 
 	// Remember to tell GLFW to clean itself up before exiting the application
 	glfwTerminate();
