@@ -143,6 +143,10 @@ ISoundEngine* SoundEngine = createIrrKlangDevice();
 ISoundEngine* sfxEngine = createIrrKlangDevice();
 ISound* sfx;
 
+bool lightOn = true;
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
 /**
  * @brief Main function
  * @return An integer indicating whether the program ended successfully or not.
@@ -1032,7 +1036,7 @@ int main()
 	GLfloat angleX = M_PI;
 	GLfloat angleY = 0.0f;
 	GLfloat camSpeed = 0.5f;
-	GLfloat mouseSpeed = 0.5f;
+	GLfloat mouseSpeed = 0.25f;
 
 	GLfloat prevTime = glfwGetTime();
 
@@ -1047,6 +1051,10 @@ int main()
 	SoundEngine->setSoundVolume(0.05f);
 	sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
 	sfxEngine->setSoundVolume(0.25f);
+
+	
+
+	glfwSetKeyCallback(window, key_callback);
 
 	// Render loop
 	while (!glfwWindowShouldClose(window))
@@ -1073,7 +1081,7 @@ int main()
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
-			upcomingCameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));;
+			upcomingCameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
 
 			if (checkCollision(upcomingCameraPosition, hitboxArray) == false)
 			{
@@ -1169,7 +1177,6 @@ int main()
 				sfx = sfxEngine->play2D("FootStep.mp3", false, false, true);
 			}
 		}
-
 		
 
 		// FIRST PASS
@@ -1640,6 +1647,10 @@ int main()
 		GLint dirLightProjectionUniformLocation2 = glGetUniformLocation(program, "lightProjection");
 		GLint dirLightViewUniformLocation2 = glGetUniformLocation(program, "lightView");
 		
+		GLint lightOnUniformLocation = glGetUniformLocation(program, "lightOn");
+
+		glUniform1i(lightOnUniformLocation, lightOn);
+
 		glUniform3fv(cameraPositionUniformLocation, 1, glm::value_ptr(cameraPosition));
 		glUniform3f(objectSpecUniformLocation, 0.2f, 0.2f, 0.2f);
 		glUniform1f(objectShineUniformLocation, 50.f);
@@ -1648,6 +1659,7 @@ int main()
 		glUniform3f(dirLightAmbientUniformLocation, 0.75f, 0.75f, 0.75f);
 		glUniform3f(dirLightDiffuseUniformLocation, 0.75f, 0.75f, 0.75f);
 		glUniform3f(dirLightSpecularUniformLocation, 0.75f, 0.75f, 0.75f);
+
 
 		glUniform3f(sLightAmbientUniformLocation, 1.0f, 1.0f, 1.0f);
 		glUniform3f(sLightDiffuseUniformLocation, 1.0f, 1.0f, 1.0f);
@@ -1840,4 +1852,15 @@ bool checkCollision(glm::vec3 cameraPosition, std::vector<Hitbox> hitboxes)
 	}
 
 	return false;
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_F && action == GLFW_PRESS)
+	{
+		std::cout << "Toggle Light" << std::endl;
+		sfx = sfxEngine->play2D("LightToggle.mp3", false, false, true);
+		sfxEngine->setSoundVolume(0.25f);
+		lightOn = !lightOn;
+	}
 }

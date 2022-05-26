@@ -21,6 +21,8 @@ uniform vec3 cameraPosition;
 uniform sampler2D shadowMap;
 uniform sampler2D tex;
 
+uniform bool lightOn;
+
 void main()
 {
 	vec3 ambient, diffuse, specular;
@@ -72,23 +74,26 @@ void main()
 		// Pass the final color to our fragColor output variable
 	}
 
-	float spotLightDiff = max(dot(norm, spotLightDir), 0.0f);
-	vec3 spotLightDiffuse = spotLightDiff * sLightDiffuse * vec3(fragColor);
+	if (lightOn)
+	{
+		float spotLightDiff = max(dot(norm, spotLightDir), 0.0f);
+		vec3 spotLightDiffuse = spotLightDiff * sLightDiffuse * vec3(fragColor);
 
-	vec3 spotLightReflectDir = reflect(-spotLightDir, norm);
-	float spotLightSpec = pow(max(dot(viewDir, spotLightReflectDir), 0.0f), objectShine);
-	vec3 spotLightSpecular = spotLightSpec * sLightSpecular * objectSpec;
-	float outerAngle = cutOff - outerCutOff;
-	float spotLightIntensity = clamp((spotAngle - outerCutOff) / outerAngle, 0.0f, 1.0f);
+		vec3 spotLightReflectDir = reflect(-spotLightDir, norm);
+		float spotLightSpec = pow(max(dot(viewDir, spotLightReflectDir), 0.0f), objectShine);
+		vec3 spotLightSpecular = spotLightSpec * sLightSpecular * objectSpec;
+		float outerAngle = cutOff - outerCutOff;
+		float spotLightIntensity = clamp((spotAngle - outerCutOff) / outerAngle, 0.0f, 1.0f);
 
-	spotLightDiffuse *= spotLightIntensity;
-	spotLightSpecular *= spotLightIntensity;
+		spotLightDiffuse *= spotLightIntensity;
+		spotLightSpecular *= spotLightIntensity;
 
-	float spotLightDistance = length(spotLightPosition - fragPosition);
-	float spotLightAttenuation = 1.0 / (sLightConstant + (sLightLinear * spotLightDistance) + (sLightQuadratic * (spotLightDistance * spotLightDistance)));
+		float spotLightDistance = length(spotLightPosition - fragPosition);
+		float spotLightAttenuation = 1.0 / (sLightConstant + (sLightLinear * spotLightDistance) + (sLightQuadratic * (spotLightDistance * spotLightDistance)));
 		
-	diffuse = diffuse + (vec3(spotLightDiffuse) * spotLightAttenuation);
-	specular = specular + (vec3(spotLightSpecular) * spotLightAttenuation);
+		diffuse = diffuse + (vec3(spotLightDiffuse) * spotLightAttenuation);
+		specular = specular + (vec3(spotLightSpecular) * spotLightAttenuation);
+	}
 
 	finalColor = (finalColor + diffuse + specular);
 	color = vec4(finalColor, 1.0f);
