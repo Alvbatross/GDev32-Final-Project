@@ -1085,7 +1085,15 @@ int main()
 
 			if (checkCollision(upcomingCameraPosition, hitboxArray) == false)
 			{
-				cameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
+				if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+				{
+					cameraPosition += (camSpeed + 0.25f) * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
+				}
+				else
+				{
+					cameraPosition += camSpeed * deltaTime * glm::normalize(glm::vec3(cameraTarget.x, 0.0f, cameraTarget.z));
+				}
+				
 			}
 			else
 			{
